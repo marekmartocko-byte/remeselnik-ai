@@ -6,14 +6,17 @@
 
 <title>Remeselník AI Dashboard</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase
 <style>
 body{
   font-family:Arial,sans-serif;
   background:#020617;
   color:white;
   padding:40px;
+}
+
+h1{
+  color:#3b82f6;
 }
 
 .card{
@@ -23,14 +26,20 @@ body{
   margin-bottom:20px;
 }
 
-h1{
-  color:#3b82f6;
+.service-item,
+.employee-item{
+  padding:12px;
+  margin-bottom:10px;
+  border:1px solid #1e293b;
+  border-radius:10px;
 }
 
-.number{
-  font-size:40px;
-  font-weight:bold;
-  color:#3b82f6;
+button{
+  padding:10px 15px;
+  margin-right:10px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
 }
 </style>
 
@@ -47,71 +56,29 @@ h1{
 
 <div class="card">
   <h2>✂️ Services</h2>
-  <div id="servicesList">
-    Loading...
-  </div>
+  <div id="servicesList">Loading...</div>
 </div>
 
 <div class="card">
   <h2>👤 Employees</h2>
-  <div id="employeesList">
-    Loading...
-  </div>
+  <div id="employeesList">Loading...</div>
 </div>
 
 <div class="card">
   <h2>⚡ Quick Actions</h2>
 
- <button onclick="showServiceForm()">
-  + Add Service
-</button>
-
-<div id="serviceForm"
-     style="
-     display:none;
-     margin-top:20px;
-     padding:20px;
-     border:1px solid #1e293b;
-     border-radius:10px;">
-
-  <h3>New Service</h3>
-
-  <input
-    id="serviceName"
-    placeholder="Service Name"
-    style="width:100%;padding:10px;margin:10px 0;">
-
-  <input
-    id="servicePrice"
-    placeholder="Price"
-    type="number"
-    style="width:100%;padding:10px;margin:10px 0;">
-
-  <input
-    id="serviceDuration"
-    placeholder="Duration (minutes)"
-    type="number"
-    style="width:100%;padding:10px;margin:10px 0;">
-
-  <button onclick="saveService()">
-    Save Service
+  <button onclick="alert('Add Service bude ďalší krok')">
+    + Add Service
   </button>
 
-</div>
-
-  <button onclick="alert('Add Employee - next step')">
+  <button onclick="alert('Add Employee bude ďalší krok')">
     + Add Employee
   </button>
 
-  <button onclick="alert('Add Customer - next step')">
+  <button onclick="alert('Add Customer bude ďalší krok')">
     + Add Customer
   </button>
 
-</div>
-
-<div class="card">
-  <h2>Customers</h2>
-  <div id="customers" class="number">0</div>
 </div>
 
 <script>
@@ -130,238 +97,90 @@ supabase.createClient(
 
 async function loadDashboard(){
 
-  const { data: businesses } =
-    await supabaseClient
-      .from("businesses")
-      .select("*");
+  try{
 
-  if(businesses && businesses.length > 0){
+    const { data: businesses } =
+      await supabaseClient
+        .from("businesses")
+        .select("*");
+
+    if(businesses && businesses.length > 0){
+
+      document.getElementById("business").innerText =
+        businesses[0].business_name;
+
+    }
+
+    const { data: services } =
+      await supabaseClient
+        .from("services")
+        .select("*");
+
+    let servicesHtml = "";
+
+    if(services && services.length > 0){
+
+      services.forEach(service => {
+
+        servicesHtml += `
+          <div class="service-item">
+            <strong>✂️ ${service.service_name}</strong><br>
+            €${service.price}<br>
+            ${service.duration_minutes} min
+          </div>
+        `;
+
+      });
+
+    } else {
+
+      servicesHtml = "Žiadne služby";
+
+    }
+
+    document.getElementById("servicesList").innerHTML =
+      servicesHtml;
+
+    const { data: employees } =
+      await supabaseClient
+        .from("employees")
+        .select("*");
+
+    let employeesHtml = "";
+
+    if(employees && employees.length > 0){
+
+      employees.forEach(employee => {
+
+        employeesHtml += `
+          <div class="employee-item">
+            👤 ${employee.employee_name}
+          </div>
+        `;
+
+      });
+
+    } else {
+
+      employeesHtml = "Žiadni zamestnanci";
+
+    }
+
+    document.getElementById("employeesList").innerHTML =
+      employeesHtml;
+
+  }
+  catch(error){
+
+    console.error(error);
+
     document.getElementById("business").innerText =
-      businesses[0].business_name;
+      "Chyba spojenia";
+
   }
 
-  const { data: services } =
-  await supabaseClient
-    .from("services")
-    .select("*");
-
-let servicesHtml = "";
-
-if (services && services.length > 0) {
-
-  services.forEach(service => {
-
-    servicesHtml += `
-      <div style="
-        padding:12px;
-        margin-bottom:10px;
-        border:1px solid #1e293b;
-        border-radius:10px;
-      ">
-        <strong>✂️ ${service.service_name}</strong><br>
-        €${service.price}<br>
-        ${service.duration_minutes} min
-      </div>
-    `;
-
-  });
-
-} else {
-
-  servicesHtml = "Žiadne služby";
-
 }
 
-document.getElementById("servicesList").innerHTML =
-  servicesHtml;
-
-  const { data: employees } =
-  await supabaseClient
-    .from("employees")
-    .select("*");
-
-let employeesHtml = "";
-
-if (employees && employees.length > 0) {
-
-  employees.forEach(employee => {
-
-    employeesHtml += `
-      <div style="
-        padding:12px;
-        margin-bottom:10px;
-        border:1px solid #1e293b;
-        border-radius:10px;
-      ">
-        👤 ${employee.employee_name}
-      </div>
-    `;
-
-  });
-
-}
-else {
-
-  employeesHtml = "Žiadni zamestnanci";
-
-}
-
-document.getElementById("employeesList").innerHTML =
-  employeesHtml;
-    await supabaseClient
-      .from("employees")
-      .select("*", {
-        count:"exact",
-        head:true
-      });
-
-  document.getElementById("employees").innerText =
-    employeesCount || 0;
-
-  const { count: customersCount } =
-    await supabaseClient
-      .from("customers")
-      .select("*", {
-        count:"exact",
-        head:true
-      });
-
-  document.getElementById("customers").innerText =
-    customersCount || 0;
-}
-function showServiceForm(){
-
-  const form =
-    document.getElementById("serviceForm");
-
-  form.style.display = "block";
-
-}
-
-async function saveService(){
-
-  const serviceName =
-    document.getElementById("serviceName").value;
-
-  const price =
-    document.getElementById("servicePrice").value;
-
-  const duration =
-    document.getElementById("serviceDuration").value;
-
-  const { error } =
-    await supabaseClient
-      .from("services")
-      .insert([
-        {
-          service_name: serviceName,
-          price: Number(price),
-          duration_minutes: Number(duration)
-        }
-      ]);
-
-  if(error){
-
-    alert("Error saving service");
-
-    console.error(error);
-
-    return;
-  }
-
-  alert("Service saved");
-
-  loadDashboard();
-
-function showServiceForm(){
-
-  const form =
-    document.getElementById("serviceForm");
-
-  form.style.display = "block";
-
-}
-
-async function saveService(){
-
-  const serviceName =
-    document.getElementById("serviceName").value;
-
-  const price =
-    document.getElementById("servicePrice").value;
-
-  const duration =
-    document.getElementById("serviceDuration").value;
-
-  const { error } =
-    await supabaseClient
-      .from("services")
-      .insert([
-        {
-          service_name: serviceName,
-          price: Number(price),
-          duration_minutes: Number(duration)
-        }
-      ]);
-
-  if(error){
-
-    alert("Error saving service");
-
-    console.error(error);
-
-    return;
-  }
-
-  alert("Service saved");
-
-  loadDashboard();
-
-function showServiceForm(){
-
-  const form =
-    document.getElementById("serviceForm");
-
-  form.style.display = "block";
-
-}
-
-async function saveService(){
-
-  const serviceName =
-    document.getElementById("serviceName").value;
-
-  const price =
-    document.getElementById("servicePrice").value;
-
-  const duration =
-    document.getElementById("serviceDuration").value;
-
-  const { error } =
-    await supabaseClient
-      .from("services")
-      .insert([
-        {
-          service_name: serviceName,
-          price: Number(price),
-          duration_minutes: Number(duration)
-        }
-      ]);
-
-  if(error){
-
-    alert("Error saving service");
-
-    console.error(error);
-
-    return;
-  }
-
-  alert("Service saved");
-
-  loadDashboard();
-
-}
 loadDashboard();
 
 </script>
