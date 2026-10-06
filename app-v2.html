@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Remeselník AI</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#020617;
+color:white;
+padding:30px;
+}
+
+.header{
+background:#0f172a;
+padding:30px;
+border-radius:20px;
+margin-bottom:25px;
+}
+
+.header h1{
+font-size:42px;
+margin-bottom:10px;
+}
+
+.header p{
+color:#94a3b8;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+margin-bottom:25px;
+}
+
+.stat{
+background:#0f172a;
+padding:25px;
+border-radius:15px;
+text-align:center;
+}
+
+.stat-number{
+font-size:40px;
+font-weight:bold;
+color:#3b82f6;
+margin-bottom:10px;
+}
+
+.card{
+background:#0f172a;
+padding:25px;
+border-radius:15px;
+margin-bottom:25px;
+}
+
+.card h2{
+margin-bottom:20px;
+}
+
+.item{
+background:#111827;
+padding:15px;
+border-radius:10px;
+margin-bottom:10px;
+}
+
+.actions{
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+}
+
+button{
+background:#2563eb;
+color:white;
+border:none;
+padding:12px 18px;
+border-radius:10px;
+cursor:pointer;
+}
+
+button:hover{
+opacity:.9;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h1>🏪 Marek Barber</h1>
+<p>Barber Shop</p>
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<div id="servicesCount" class="stat-number">0</div>
+<div>Services</div>
+</div>
+
+<div class="stat">
+<div id="employeesCount" class="stat-number">0</div>
+<div>Employees</div>
+</div>
+
+<div class="stat">
+<div id="customersCount" class="stat-number">0</div>
+<div>Customers</div>
+</div>
+
+<div class="stat">
+<div id="bookingsCount" class="stat-number">0</div>
+<div>Bookings</div>
+</div>
+
+</div>
+
+<div class="card">
+<h2>✂️ Services</h2>
+
+<div class="item">
+Pánsky strih<br>
+20 €<br>
+30 min
+</div>
+
+<div class="item">
+Farbenie<br>
+60 €<br>
+90 min
+</div>
+
+<button>
++ Add Service
+</button>
+
+</div>
+
+<div class="card">
+<h2>👤 Employees</h2>
+
+<div class="item">
+Peter
+</div>
+
+<div class="item">
+Jana
+</div>
+
+<button>
++ Add Employee
+</button>
+
+</div>
+
+<div class="card">
+<h2>👥 Customers</h2>
+
+<p>Zatiaľ žiadni klienti.</p>
+
+<br>
+
+<button>
++ Add Customer
+</button>
+
+</div>
+
+<div class="card">
+<h2>📅 Bookings</h2>
+
+<p>Žiadne rezervácie.</p>
+
+<br>
+
+<button>
++ New Booking
+</button>
+
+</div>
+
+</body>
+</html>
