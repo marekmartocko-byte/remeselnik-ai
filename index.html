@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Remeselník AI</title>
 
 <style>
@@ -11,7 +12,7 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Inter,Arial,sans-serif;
+font-family:Arial,sans-serif;
 }
 
 body{
@@ -20,39 +21,20 @@ color:white;
 }
 
 nav{
+padding:25px 8%;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:25px 8%;
-border-bottom:1px solid rgba(255,255,255,0.08);
+border-bottom:1px solid #1e293b;
 }
 
 .logo{
-font-size:28px;
-font-weight:800;
+font-size:30px;
+font-weight:bold;
 }
 
 .logo span{
 color:#3b82f6;
-}
-
-.nav-links{
-display:flex;
-gap:30px;
-}
-
-.nav-links a{
-color:#cbd5e1;
-text-decoration:none;
-}
-
-.demo-btn{
-background:#2563eb;
-padding:12px 22px;
-border-radius:10px;
-color:white;
-text-decoration:none;
-font-weight:bold;
 }
 
 .hero{
@@ -63,34 +45,418 @@ text-align:center;
 }
 
 .hero h1{
-font-size:72px;
+font-size:70px;
 line-height:1.1;
 margin-bottom:20px;
 }
 
-.hero span{
+.hero h1 span{
 color:#3b82f6;
 }
 
 .hero p{
-max-width:750px;
-margin:auto;
 font-size:22px;
 color:#94a3b8;
+max-width:800px;
+margin:auto;
 margin-bottom:40px;
 }
 
-.hero-buttons{
+.buttons{
 display:flex;
 justify-content:center;
 gap:15px;
 flex-wrap:wrap;
 }
 
-.btn-primary{
-background:#2563eb;
-color:white;
-padding:16px 30px;
+.btn{
+padding:16px 28px;
 border-radius:12px;
 text-decoration:none;
-font-weight:bold
+font-weight:bold;
+}
+
+.primary{
+background:#2563eb;
+color:white;
+}
+
+.secondary{
+border:1px solid #334155;
+color:white;
+}
+
+.dashboard{
+max-width:1100px;
+margin:auto;
+padding:0 30px 100px;
+}
+
+.dashboard-box{
+background:#0f172a;
+border:1px solid #1e293b;
+border-radius:24px;
+padding:40px;
+}
+
+.metrics{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+}
+
+.metric{
+background:#111827;
+padding:25px;
+border-radius:16px;
+text-align:center;
+}
+
+.metric h2{
+font-size:40px;
+color:#3b82f6;
+margin-bottom:10px;
+}
+
+section{
+padding:100px 30px;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+}
+
+.title{
+font-size:48px;
+text-align:center;
+margin-bottom:20px;
+}
+
+.subtitle{
+color:#94a3b8;
+text-align:center;
+margin-bottom:60px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
+}
+
+.card{
+background:#0f172a;
+padding:30px;
+border-radius:18px;
+border:1px solid #1e293b;
+}
+
+.card h3{
+margin-bottom:15px;
+}
+
+.card p{
+color:#94a3b8;
+line-height:1.6;
+}
+
+.pricing{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
+}
+
+.price{
+background:#0f172a;
+padding:35px;
+border-radius:20px;
+border:1px solid #1e293b;
+text-align:center;
+}
+
+.popular{
+border:2px solid #3b82f6;
+}
+
+.price h2{
+font-size:54px;
+margin:20px 0;
+}
+
+.price ul{
+list-style:none;
+margin-top:20px;
+}
+
+.price li{
+padding:8px;
+color:#cbd5e1;
+}
+
+.contact{
+max-width:700px;
+margin:auto;
+}
+
+.contact input{
+width:100%;
+padding:16px;
+margin-bottom:15px;
+border:none;
+border-radius:10px;
+background:#0f172a;
+color:white;
+}
+
+.contact button{
+width:100%;
+padding:18px;
+border:none;
+background:#2563eb;
+color:white;
+font-weight:bold;
+border-radius:10px;
+cursor:pointer;
+}
+
+footer{
+text-align:center;
+padding:60px;
+color:#64748b;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav>
+
+<div class="logo">
+Remeselník <span>AI</span>
+</div>
+
+<div>
+Rezervácie • CRM • Fakturácia
+</div>
+
+</nav>
+
+<section class="hero">
+
+<h1>
+Riadenie prevádzky.
+<span>Automaticky.</span>
+</h1>
+
+<p>
+Rezervácie, CRM, fakturácia a AI asistent pre kaderníctva,
+barber shopy a kozmetické salóny.
+</p>
+
+<div class="buttons">
+#Vyskúšať zdarma</a>
+#Pozrieť demo</a>
+</div>
+
+</section>
+
+<div class="dashboard">
+
+<div class="dashboard-box">
+
+<div class="metrics">
+
+<div class="metric">
+<h2>23</h2>
+<p>Rezervácií dnes</p>
+</div>
+
+<div class="metric">
+<h2>1280€</h2>
+<p>Denný obrat</p>
+</div>
+
+<div class="metric">
+<h2>14</h2>
+<p>Nových klientov</p>
+</div>
+
+<div class="metric">
+<h2>98%</h2>
+<p>Spokojnosť</p>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<section>
+
+<div class="container">
+
+<h2 class="title">
+Všetko čo potrebujete
+</h2>
+
+<p class="subtitle">
+Jedna platforma namiesto piatich rôznych nástrojov.
+</p>
+
+<div class="grid">
+
+<div class="card">
+<h3>📅 Online rezervácie</h3>
+<p>Zákazníci sa objednávajú 24 hodín denne.</p>
+</div>
+
+<div class="card">
+<h3>👥 CRM zákazníkov</h3>
+<p>História návštev, poznámky a kontakty.</p>
+</div>
+
+<div class="card">
+<h3>💰 Fakturácia</h3>
+<p>Automatické vystavovanie faktúr.</p>
+</div>
+
+<div class="card">
+<h3>📊 Dashboard</h3>
+<p>Tržby, rezervácie a výkon firmy.</p>
+</div>
+
+<div class="card">
+<h3>🤖 AI Asistent</h3>
+<p>Odpovedá zákazníkom automaticky.</p>
+</div>
+
+<div class="card">
+<h3>📱 Mobilná aplikácia</h3>
+<p>Spravujte firmu kdekoľvek.</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section>
+
+<div class="container">
+
+<h2 class="title">
+Pre koho je Remeselník AI
+</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>💇 Kaderníctva</h3>
+<p>Rezervácie, CRM a pripomienky.</p>
+</div>
+
+<div class="card">
+<h3>💈 Barber Shopy</h3>
+<p>Vernostné programy a marketing.</p>
+</div>
+
+<div class="card">
+<h3>💅 Kozmetické salóny</h3>
+<p>Kompletná evidencia klientov.</p>
+</div>
+
+<div class="card">
+<h3>🚗 Pneuservisy</h3>
+<p>Objednávky a zákazky.</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section>
+
+<div class="container">
+
+<h2 class="title">
+Jednoduchý cenník
+</h2>
+
+<div class="pricing">
+
+<div class="price">
+<h3>Starter</h3>
+<h2>29€</h2>
+<ul>
+<li>Rezervácie</li>
+<li>Kalendár</li>
+<li>Email notifikácie</li>
+</ul>
+</div>
+
+<div class="price popular">
+<h3>Professional ⭐</h3>
+<h2>79€</h2>
+<ul>
+<li>CRM</li>
+<li>Fakturácia</li>
+<li>Dashboard</li>
+<li>Automatizácie</li>
+</ul>
+</div>
+
+<div class="price">
+<h3>Premium</h3>
+<h2>149€</h2>
+<ul>
+<li>AI asistent</li>
+<li>Power BI</li>
+<li>Mobilná aplikácia</li>
+</ul>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section>
+
+<div class="contact">
+
+<h2 class="title">
+Rezervujte si demo
+</h2>
+
+<input placeholder="Meno">
+
+<input placeholder="Názov prevádzky">
+
+<input placeholder="Email">
+
+<input placeholder="Telefón">
+
+<button>
+Chcem ukážku
+</button>
+
+</div>
+
+</section>
+
+<footer>
+
+Remeselník AI © 2026
+
+</footer>
+
+</body>
+</html>
