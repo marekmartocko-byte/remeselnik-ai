@@ -2,64 +2,127 @@
 <html lang="sk">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Remeselník AI Dashboard</title>
 
-<style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<style>
 body{
-    font-family:Arial,sans-serif;
-    background:#020617;
-    color:white;
-    padding:40px;
+  font-family:Arial,sans-serif;
+  background:#020617;
+  color:white;
+  padding:40px;
 }
 
 .card{
-    background:#0f172a;
-    padding:25px;
-    border-radius:15px;
-    margin-bottom:20px;
+  background:#0f172a;
+  padding:25px;
+  border-radius:15px;
+  margin-bottom:20px;
 }
 
 h1{
-    color:#3b82f6;
+  color:#3b82f6;
 }
 
 .number{
-    font-size:40px;
-    font-weight:bold;
-    color:#3b82f6;
+  font-size:40px;
+  font-weight:bold;
+  color:#3b82f6;
 }
-
 </style>
 
 </head>
 
 <body>
 
-<h1>Remeselník AI</h1>
+<h1>Remeselník AI Dashboard</h1>
 
 <div class="card">
-    <h2>Business</h2>
-    <div id="business">Načítavam...</div>
+  <h2>Business</h2>
+  <div id="business">Načítavam...</div>
 </div>
 
 <div class="card">
-    <h2>Services</h2>
-    <div class="number" id="services">0</div>
+  <h2>Services</h2>
+  <div id="services" class="number">0</div>
 </div>
 
 <div class="card">
-    <h2>Employees</h2>
-    <div class="number" id="employees">0</div>
+  <h2>Employees</h2>
+  <div id="employees" class="number">0</div>
 </div>
 
 <div class="card">
-    <h2>Customers</h2>
-    <div class="number" id="customers">0</div>
+  <h2>Customers</h2>
+  <div id="customers" class="number">0</div>
 </div>
+
+<script>
+
+const SUPABASE_URL =
+"https://urppomjdvsumtivcztes.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_tSNVgtPEwmIJiSKrqidPQw_QIbDquEE";
+
+const supabaseClient =
+supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+async function loadDashboard(){
+
+  const { data: businesses } =
+    await supabaseClient
+      .from("businesses")
+      .select("*");
+
+  if(businesses && businesses.length > 0){
+    document.getElementById("business").innerText =
+      businesses[0].business_name;
+  }
+
+  const { count: servicesCount } =
+    await supabaseClient
+      .from("services")
+      .select("*", {
+        count:"exact",
+        head:true
+      });
+
+  document.getElementById("services").innerText =
+    servicesCount || 0;
+
+  const { count: employeesCount } =
+    await supabaseClient
+      .from("employees")
+      .select("*", {
+        count:"exact",
+        head:true
+      });
+
+  document.getElementById("employees").innerText =
+    employeesCount || 0;
+
+  const { count: customersCount } =
+    await supabaseClient
+      .from("customers")
+      .select("*", {
+        count:"exact",
+        head:true
+      });
+
+  document.getElementById("customers").innerText =
+    customersCount || 0;
+}
+
+loadDashboard();
+
+</script>
 
 </body>
 </html>
-``
