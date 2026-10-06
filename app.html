@@ -62,9 +62,42 @@ h1{
 <div class="card">
   <h2>⚡ Quick Actions</h2>
 
-  <button onclick="alert('Add Service - next step')">
-    + Add Service
+ <button onclick="showServiceForm()">
+  + Add Service
+</button>
+
+<div id="serviceForm"
+     style="
+     display:none;
+     margin-top:20px;
+     padding:20px;
+     border:1px solid #1e293b;
+     border-radius:10px;">
+
+  <h3>New Service</h3>
+
+  <input
+    id="serviceName"
+    placeholder="Service Name"
+    style="width:100%;padding:10px;margin:10px 0;">
+
+  <input
+    id="servicePrice"
+    placeholder="Price"
+    type="number"
+    style="width:100%;padding:10px;margin:10px 0;">
+
+  <input
+    id="serviceDuration"
+    placeholder="Duration (minutes)"
+    type="number"
+    style="width:100%;padding:10px;margin:10px 0;">
+
+  <button onclick="saveService()">
+    Save Service
   </button>
+
+</div>
 
   <button onclick="alert('Add Employee - next step')">
     + Add Employee
@@ -196,7 +229,139 @@ document.getElementById("employeesList").innerHTML =
   document.getElementById("customers").innerText =
     customersCount || 0;
 }
+function showServiceForm(){
 
+  const form =
+    document.getElementById("serviceForm");
+
+  form.style.display = "block";
+
+}
+
+async function saveService(){
+
+  const serviceName =
+    document.getElementById("serviceName").value;
+
+  const price =
+    document.getElementById("servicePrice").value;
+
+  const duration =
+    document.getElementById("serviceDuration").value;
+
+  const { error } =
+    await supabaseClient
+      .from("services")
+      .insert([
+        {
+          service_name: serviceName,
+          price: Number(price),
+          duration_minutes: Number(duration)
+        }
+      ]);
+
+  if(error){
+
+    alert("Error saving service");
+
+    console.error(error);
+
+    return;
+  }
+
+  alert("Service saved");
+
+  loadDashboard();
+
+function showServiceForm(){
+
+  const form =
+    document.getElementById("serviceForm");
+
+  form.style.display = "block";
+
+}
+
+async function saveService(){
+
+  const serviceName =
+    document.getElementById("serviceName").value;
+
+  const price =
+    document.getElementById("servicePrice").value;
+
+  const duration =
+    document.getElementById("serviceDuration").value;
+
+  const { error } =
+    await supabaseClient
+      .from("services")
+      .insert([
+        {
+          service_name: serviceName,
+          price: Number(price),
+          duration_minutes: Number(duration)
+        }
+      ]);
+
+  if(error){
+
+    alert("Error saving service");
+
+    console.error(error);
+
+    return;
+  }
+
+  alert("Service saved");
+
+  loadDashboard();
+
+function showServiceForm(){
+
+  const form =
+    document.getElementById("serviceForm");
+
+  form.style.display = "block";
+
+}
+
+async function saveService(){
+
+  const serviceName =
+    document.getElementById("serviceName").value;
+
+  const price =
+    document.getElementById("servicePrice").value;
+
+  const duration =
+    document.getElementById("serviceDuration").value;
+
+  const { error } =
+    await supabaseClient
+      .from("services")
+      .insert([
+        {
+          service_name: serviceName,
+          price: Number(price),
+          duration_minutes: Number(duration)
+        }
+      ]);
+
+  if(error){
+
+    alert("Error saving service");
+
+    console.error(error);
+
+    return;
+  }
+
+  alert("Service saved");
+
+  loadDashboard();
+
+}
 loadDashboard();
 
 </script>
