@@ -1,63 +1,155 @@
 # Remeselník AI
 
-## Primárny trh
+## Vízia
 
-- Kaderníctva
-- Barber shopy
-- Kozmetické salóny
-- Nechtové štúdiá
+Digitálny operačný systém pre kaderníctva, barber shopy, kozmetické salóny a nechtové štúdiá.
 
-## Modul 1 - Registrácia
+---
 
-- Meno
-- Email
-- Heslo
-- Názov prevádzky
+# MVP 1.0
 
-## Modul 2 - Onboarding
+## Landing Page
 
-- Služby
-- Zamestnanci
+- Hero
+- Funkcie
+- Dashboard Preview
 - Cenník
-- Otváracie hodiny
+- Formulár
 
-## Modul 3 - Dashboard
+---
 
-- Rezervácie
-- Tržby
-- Noví klienti
-- Spokojnosť
+## Prihlásenie
 
-## Modul 4 - Kalendár
+Login
 
-- Denný pohľad
-- Týždenný pohľad
-- Rezervácie
+Email
+Heslo
 
-## Modul 5 - Klienti
+---
 
-- Meno
-- Telefón
-- Email
-- História návštev
+## Registrácia
 
-## Modul 6 - Služby
+Meno
+Email
+Heslo
+Názov prevádzky
+Typ prevádzky
 
-- Názov
-- Cena
-- Trvanie
+---
 
-## Modul 7 - Faktúry
+## Onboarding
 
-- PDF
-- Email
-- Platby
+Krok 1
+Pridaj služby
 
-## Modul 8 - AI Asistent
+Krok 2
+Pridaj zamestnancov
 
-- FAQ
-- Rezervácie
-- Marketing
+Krok 3
+Nastav pracovný čas
+
+Krok 4
+Hotovo
+
+---
+
+## Dashboard
+
+Rezervácie dnes
+
+Denný obrat
+
+Noví klienti
+
+Spokojnosť
+
+---
+
+## Kalendár
+
+Denný pohľad
+
+Týždenný pohľad
+
+Mesačný pohľad
+
+---
+
+## Klienti
+
+Meno
+
+Email
+
+Telefón
+
+História návštev
+
+---
+
+## Služby
+
+Názov
+
+Cena
+
+Trvanie
+
+Kategória
+
+---
+
+## Zamestnanci
+
+Meno
+
+Dostupnosť
+
+Pracovný čas
+
+Poskytované služby
+
+---
+
+## Faktúry
+
+PDF
+
+Email
+
+Platby
+
+---
+
+## Databáza
+
+Users
+
+Businesses
+
+Employees
+
+Services
+
+Customers
+
+Bookings
+
+Invoices
+
+---
+
+## AI Asistent
+
+Rezervácie
+
+FAQ
+
+Marketing
+
+Odporúčanie termínov
+
+---
 
 ## Cenník
 
@@ -66,3 +158,25 @@ Starter 29 €
 Professional 79 €
 
 Premium 149 €
+
+---
+
+## Fáza 2
+
+CRM
+
+Marketing
+
+Loyalty Program
+
+---
+
+## Fáza 3
+
+WhatsApp
+
+Power Automate
+
+Power BI
+
+AI Receptionist
