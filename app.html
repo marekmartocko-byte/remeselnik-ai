@@ -106,40 +106,7 @@ button{
 <body>
 
 <h1>Remeselník AI Dashboard</h1>
-  <div class="card">
 
-  <h2>🏪 Marek Barber</h2>
-
-  <p style="color:#94a3b8;">
-    Barber Shop
-  </p>
-
-</div>
-
-<div class="stats">
-
-  <div class="stat">
-    <div class="stat-number">2</div>
-    <div>Services</div>
-  </div>
-
-  <div class="stat">
-    <div class="stat-number">2</div>
-    <div>Employees</div>
-  </div>
-
-  <div class="stat">
-    <div class="stat-number">0</div>
-    <div>Customers</div>
-  </div>
-
-  <div class="stat">
-    <div class="stat-number">0</div>
-    <div>Bookings</div>
-  </div>
-
-</div>
-<div class="card">
 
 <h2>🏪 Marek Barber</h2>
 
@@ -150,55 +117,62 @@ button{
 <div class="stats">
 
 <div class="stat">
-<div class="stat-number">2</div>
+<div id="servicesCount" class="stat-number">0</div>
 <div>Services</div>
 </div>
 
 <div class="stat">
-<div class="stat-number">2</div>
+<div id="employeesCount" class="stat-number">0</div>
 <div>Employees</div>
 </div>
 
 <div class="stat">
-<div class="stat-number">0</div>
+<div id="customersCount" class="stat-number">0</div>
+
 <div>Customers</div>
 </div>
 
 <div class="stat">
-<div class="stat-number">0</div>
+<div id="bookingsCount" class="stat-number">0</div>
 <div>Bookings</div>
 </div>
 
 </div>
 <div class="card">
-  <h2>Business</h2>
-  <div id="business">Načítavam...</div>
+
+<h2>✂️ Services</h2>
+
+<div id="servicesList">
+Loading...
+</div>
+
 </div>
 
 <div class="card">
-  <h2>✂️ Services</h2>
-  <div id="servicesList">Loading...</div>
+
+<h2>👤 Employees</h2>
+
+<div id="employeesList">
+Loading...
+</div>
+
 </div>
 
 <div class="card">
-  <h2>👤 Employees</h2>
-  <div id="employeesList">Loading...</div>
-</div>
 
-<div class="card">
-  <h2>⚡ Quick Actions</h2>
+<h2>⚡ Quick Actions</h2>
 
-  <button onclick="alert('Add Service bude ďalší krok')">
-    + Add Service
-  </button>
+<button>
++ Add Service
+</button>
 
-  <button onclick="alert('Add Employee bude ďalší krok')">
-    + Add Employee
-  </button>
+<button>
++ Add Employee
+</button>
 
-  <button onclick="alert('Add Customer bude ďalší krok')">
-    + Add Customer
-  </button>
+<button>
++ Add Customer
+</button>
 
 </div>
 
@@ -261,7 +235,8 @@ async function loadDashboard(){
 
     document.getElementById("servicesList").innerHTML =
       servicesHtml;
-
+document.getElementById("servicesCount").innerText =
+services.length;
     const { data: employees } =
       await supabaseClient
         .from("employees")
@@ -289,7 +264,8 @@ async function loadDashboard(){
 
     document.getElementById("employeesList").innerHTML =
       employeesHtml;
-
+document.getElementById("employeesCount").innerText =
+employees.length;
   }
   catch(error){
 
