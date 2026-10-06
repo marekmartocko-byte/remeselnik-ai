@@ -103,6 +103,19 @@ button:hover{
   opacity:0.9;
 }
 
+input{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  margin-bottom:10px;
+}
+
+#serviceForm{
+  display:none;
+  margin-top:20px;
+}
+
 </style>
 
 </head>
@@ -110,17 +123,14 @@ button:hover{
 <body>
 
 <div class="header">
-
 <h1>🏪 Marek Barber</h1>
-
 <p>Barber Shop</p>
-
 </div>
 
 <div class="stats">
 
 <div class="stat">
-<div class="stat-number">2</div>
+<div id="servicesCount" class="stat-number">2</div>
 <div>Services</div>
 </div>
 
@@ -145,6 +155,8 @@ button:hover{
 
 <h2>✂️ Services</h2>
 
+<div id="servicesContainer">
+
 <div class="item">
 <div class="item-title">✂️ Pánsky strih</div>
 <div class="item-subtitle">20 € · 30 min</div>
@@ -155,9 +167,25 @@ button:hover{
 <div class="item-subtitle">60 € · 90 min</div>
 </div>
 
-<button>
+</div>
+
+<button onclick="toggleServiceForm()">
 + Add Service
 </button>
+
+<div id="serviceForm">
+
+<input id="serviceName" placeholder="Service Name">
+
+<input id="servicePrice" type="number" placeholder="Price">
+
+<input id="serviceDuration" type="number" placeholder="Duration (minutes)">
+
+<button onclick="saveService()">
+Save Service
+</button>
+
+</div>
 
 </div>
 
@@ -194,6 +222,68 @@ button:hover{
 </button>
 
 </div>
+
+<script>
+
+function toggleServiceForm(){
+
+  const form =
+    document.getElementById("serviceForm");
+
+  if(form.style.display === "none"){
+    form.style.display = "block";
+  }else{
+    form.style.display = "none";
+  }
+
+}
+
+function saveService(){
+
+  const name =
+    document.getElementById("serviceName").value;
+
+  const price =
+    document.getElementById("servicePrice").value;
+
+  const duration =
+    document.getElementById("serviceDuration").value;
+
+  if(name === ""){
+
+    alert("Zadaj názov služby");
+    return;
+
+  }
+
+  document.getElementById(
+    "servicesContainer"
+  ).innerHTML += `
+  <div class="item">
+    <div class="item-title">
+      ✂️ ${name}
+    </div>
+    <div class="item-subtitle">
+      ${price} € · ${duration} min
+    </div>
+  </div>`;
+
+  const count =
+    document.getElementById("servicesCount");
+
+  count.innerText =
+    Number(count.innerText) + 1;
+
+  document.getElementById("serviceName").value = "";
+  document.getElementById("servicePrice").value = "";
+  document.getElementById("serviceDuration").value = "";
+
+  document.getElementById("serviceForm").style.display =
+    "none";
+
+}
+
+</script>
 
 </body>
 </html>
