@@ -180,3 +180,67 @@ Power Automate
 Power BI
 
 AI Receptionist
+---
+
+# USER FLOW
+
+Visitor
+↓
+Landing Page
+
+Clicks "Start Free Trial"
+↓
+Registration
+
+Name
+Email
+Password
+Business Name
+Business Type
+
+↓
+Create Business
+
+↓
+Add Services
+
+Example:
+
+Men Haircut
+20€
+30 min
+
+Women's Haircut
+35€
+45 min
+
+Coloring
+60€
+90 min
+
+↓
+Add Employees
+
+Peter
+Jana
+Monika
+
+↓
+Set Opening Hours
+
+Monday-Friday
+08:00 - 18:00
+
+↓
+Dashboard
+
+Today's Bookings
+
+Revenue
+
+Customers
+
+Upcoming Appointments
+
+↓
+Receive Online Bookings
