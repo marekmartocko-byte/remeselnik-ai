@@ -325,9 +325,33 @@ Farbenie
 
 <br>
 
-<button>
+<button onclick="toggleBookingForm()">
 + New Booking
 </button>
+
+<div id="bookingForm" style="display:none;margin-top:20px;">
+
+<input
+id="bookingCustomer"
+placeholder="Customer Name">
+
+<input
+id="bookingService"
+placeholder="Service">
+
+<input
+id="bookingEmployee"
+placeholder="Employee">
+
+<input
+id="bookingTime"
+placeholder="Time (e.g. 15:00)">
+
+<button onclick="saveBooking()">
+Save Booking
+</button>
+
+</div>
 
 </div>
 
@@ -347,40 +371,99 @@ function toggleServiceForm(){
 }
 
 function saveService(){
+const name =
+  document.getElementById("serviceName").value;
 
-  const name =
-    document.getElementById("serviceName").value;
+const price =
+  document.getElementById("servicePrice").value;
 
-  const price =
-    document.getElementById("servicePrice").value;
+const duration =
+  document.getElementById("serviceDuration").value;
 
-  const duration =
-    document.getElementById("serviceDuration").value;
+if(name === ""){
 
-  if(name === ""){
+  alert("Zadaj názov služby");
+  return;
 
-    alert("Zadaj názov služby");
-    return;
+}
 
+document.getElementById(
+  "servicesContainer"
+).innerHTML += `
+<div class="item">
+  <div class="item-title">
+    ✂️ ${name}
+  </div>
+  <div class="item-subtitle">
+    ${price} € · ${duration} min
+  </div>
+</div>`;
+
+const count =
+  document.getElementById("servicesCount");
+
+count.innerText =
+  Number(count.innerText) + 1;
+
+document.getElementById("serviceName").value = "";
+document.getElementById("servicePrice").value = "";
+document.getElementById("serviceDuration").value = "";
+
+document.getElementById("serviceForm").style.display =
+  "none";
+}
+}
+function toggleBookingForm(){
+
+  const form =
+    document.getElementById("bookingForm");
+
+  if(form.style.display === "none"){
+    form.style.display = "block";
+  }else{
+    form.style.display = "none";
   }
 
-  document.getElementById(
-    "servicesContainer"
-  ).innerHTML += `
-  <div class="item">
-    <div class="item-title">
-      ✂️ ${name}
-    </div>
-    <div class="item-subtitle">
-      ${price} € · ${duration} min
-    </div>
-  </div>`;
+}
 
-  const count =
-    document.getElementById("servicesCount");
+function saveBooking(){
 
-  count.innerText =
-    Number(count.innerText) + 1;
+  const customer =
+    document.getElementById("bookingCustomer").value;
+
+  const service =
+    document.getElementById("bookingService").value;
+
+  const employee =
+    document.getElementById("bookingEmployee").value;
+
+  const time =
+    document.getElementById("bookingTime").value;
+
+  if(customer === ""){
+    alert("Zadaj meno zákazníka");
+    return;
+  }
+
+  alert(
+    "Rezervácia vytvorená:\n\n" +
+    customer + "\n" +
+    service + "\n" +
+    employee + "\n" +
+    time
+  );
+
+  document.getElementById("bookingCustomer").value = "";
+  document.getElementById("bookingService").value = "";
+  document.getElementById("bookingEmployee").value = "";
+  document.getElementById("bookingTime").value = "";
+
+  document.getElementById("bookingForm").style.display =
+    "none";
+
+}
+
+
 
   document.getElementById("serviceName").value = "";
   document.getElementById("servicePrice").value = "";
