@@ -46,13 +46,34 @@ h1{
 </div>
 
 <div class="card">
-  <h2>Services</h2>
-  <div id="services" class="number">0</div>
+  <h2>✂️ Services</h2>
+  <div id="servicesList">
+    Loading...
+  </div>
 </div>
 
 <div class="card">
-  <h2>Employees</h2>
-  <div id="employees" class="number">0</div>
+  <h2>👤 Employees</h2>
+  <div id="employeesList">
+    Loading...
+  </div>
+</div>
+
+<div class="card">
+  <h2>⚡ Quick Actions</h2>
+
+  <button onclick="alert('Add Service - next step')">
+    + Add Service
+  </button>
+
+  <button onclick="alert('Add Employee - next step')">
+    + Add Employee
+  </button>
+
+  <button onclick="alert('Add Customer - next step')">
+    + Add Customer
+  </button>
+
 </div>
 
 <div class="card">
@@ -86,18 +107,74 @@ async function loadDashboard(){
       businesses[0].business_name;
   }
 
-  const { count: servicesCount } =
-    await supabaseClient
-      .from("services")
-      .select("*", {
-        count:"exact",
-        head:true
-      });
+  const { data: services } =
+  await supabaseClient
+    .from("services")
+    .select("*");
 
-  document.getElementById("services").innerText =
-    servicesCount || 0;
+let servicesHtml = "";
 
-  const { count: employeesCount } =
+if (services && services.length > 0) {
+
+  services.forEach(service => {
+
+    servicesHtml += `
+      <div style="
+        padding:12px;
+        margin-bottom:10px;
+        border:1px solid #1e293b;
+        border-radius:10px;
+      ">
+        <strong>✂️ ${service.service_name}</strong><br>
+        €${service.price}<br>
+        ${service.duration_minutes} min
+      </div>
+    `;
+
+  });
+
+} else {
+
+  servicesHtml = "Žiadne služby";
+
+}
+
+document.getElementById("servicesList").innerHTML =
+  servicesHtml;
+
+  const { data: employees } =
+  await supabaseClient
+    .from("employees")
+    .select("*");
+
+let employeesHtml = "";
+
+if (employees && employees.length > 0) {
+
+  employees.forEach(employee => {
+
+    employeesHtml += `
+      <div style="
+        padding:12px;
+        margin-bottom:10px;
+        border:1px solid #1e293b;
+        border-radius:10px;
+      ">
+        👤 ${employee.employee_name}
+      </div>
+    `;
+
+  });
+
+}
+else {
+
+  employeesHtml = "Žiadni zamestnanci";
+
+}
+
+document.getElementById("employeesList").innerHTML =
+  employeesHtml;
     await supabaseClient
       .from("employees")
       .select("*", {
