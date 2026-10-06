@@ -144,9 +144,35 @@ Farbenie<br>
 90 min
 </div>
 
-<button>
+<button onclick="showServiceForm()">
 + Add Service
 </button>
+
+<div id="serviceForm"
+     style="display:none;margin-top:20px;">
+
+<input
+id="serviceName"
+placeholder="Service Name"
+style="width:100%;padding:10px;margin-bottom:10px;">
+
+<input
+id="servicePrice"
+placeholder="Price"
+type="number"
+style="width:100%;padding:10px;margin-bottom:10px;">
+
+<input
+id="serviceDuration"
+placeholder="Duration"
+type="number"
+style="width:100%;padding:10px;margin-bottom:10px;">
+
+<button onclick="saveService()">
+Save Service
+</button>
+
+</div>
 
 </div>
 
