@@ -21,6 +21,43 @@ h1{
 
 .card{
   background:#0f172a;
+  padding:30px;
+  border-radius:20px;
+  margin-bottom:25px;
+  border:1px solid #1e293b;
+}
+
+.card h2{
+  margin-bottom:20px;
+}
+
+.service-item,
+.employee-item{
+  background:#111827;
+  padding:15px;
+  margin-bottom:12px;
+  border-radius:12px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:20px;
+}
+
+.stat{
+  background:#111827;
+  padding:25px;
+  border-radius:15px;
+  text-align:center;
+}
+
+.stat-number{
+  font-size:40px;
+  font-weight:bold;
+  color:#3b82f6;
+}
+  background:#0f172a;
   padding:25px;
   border-radius:15px;
   margin-bottom:20px;
@@ -48,7 +85,37 @@ button{
 <body>
 
 <h1>Remeselník AI Dashboard</h1>
+<div class="card">
 
+<h2>🏪 Marek Barber</h2>
+
+<p>Barber Shop</p>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<div class="stat-number">2</div>
+<div>Services</div>
+</div>
+
+<div class="stat">
+<div class="stat-number">2</div>
+<div>Employees</div>
+</div>
+
+<div class="stat">
+<div class="stat-number">0</div>
+<div>Customers</div>
+</div>
+
+<div class="stat">
+<div class="stat-number">0</div>
+<div>Bookings</div>
+</div>
+
+</div>
 <div class="card">
   <h2>Business</h2>
   <div id="business">Načítavam...</div>
