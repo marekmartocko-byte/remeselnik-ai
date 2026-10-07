@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="sk">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Remeselník AI Dashboard</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#020617;
+color:white;
+display:flex;
+height:100vh;
+overflow:hidden;
+}
+
+.sidebar{
+width:250px;
+background:#0f172a;
+padding:20px;
+border-right:1px solid #1e293b;
+}
+
+.logo{
+font-size:22px;
+font-weight:bold;
+margin-bottom:30px;
+}
+
+.menu-item{
+padding:12px;
+margin-bottom:8px;
+background:#111827;
+border-radius:10px;
+cursor:pointer;
+}
+
+.menu-item:hover{
+background:#2563eb;
+}
+
+.main{
+flex:1;
+padding:25px;
+overflow:auto;
+}
+
+.cards{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin-bottom:25px;
+}
+
+.card{
+background:#0f172a;
+padding:20px;
+border-radius:15px;
+border:1px solid #1e293b;
+}
+
+.kpi{
+font-size:32px;
+font-weight:bold;
+color:#3b82f6;
+margin-top:10px;
+}
+
+.calendar{
+display:grid;
+grid-template-columns:
+repeat(5,1fr);
+gap:10px;
+margin-top:20px;
+}
+
+.time-slot{
+background:#111827;
+padding:15px;
+border-radius:10px;
+border:1px solid #1e293b;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-bottom:10px;
+border-radius:10px;
+border:none;
+}
+
+button{
+background:#2563eb;
+color:white;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.employee{
+background:#111827;
+padding:12px;
+margin-bottom:10px;
+border-radius:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<div class="logo">
+🤖 Remeselník AI
+</div>
+
+<div class="menu-item">
+📊 Dashboard
+</div>
+
+<div class="menu-item">
+📅 Kalendár
+</div>
+
+<div class="menu-item">
+👥 Zákazníci
+</div>
+
+<div class="menu-item">
+👨‍💼 Zamestnanci
+</div>
+
+<div class="menu-item">
+🛠️ Služby
+</div>
+
+<div class="menu-item">
+🌐 Booking Widget
+</div>
+
+<div class="menu-item">
+⚙️ Nastavenia
+</div>
+
+</div>
+
+<div class="main">
+
+<h1>
+Spravujte svoju prevádzku inteligentne
+</h1>
+
+<br>
+
+<div class="cards">
+
+<div class="card">
+Dnešné rezervácie
+<div class="kpi" id="bookingCount">
+0
+</div>
+</div>
+
+<div class="card">
+Zákazníci
+<div class="kpi" id="customerCount">
+0
+</div>
+</div>
+
+<div class="card">
+Zamestnanci
+<div class="kpi" id="employeeCount">
+0
+</div>
+</div>
+
+<div class="card">
+Mesačný obrat
+<div class="kpi">
+4850€
+</div>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>👨‍💼 Zamestnanci</h2>
+
+<br>
+
+<input
+id="employeeName"
+placeholder="Meno zamestnanca">
+
+<button onclick="addEmployee()">
+Pridať zamestnanca
+</button>
+
+<br><br>
+
+<div id="employees"></div>
+
+</div>
+
+<br>
+
+<div class="card">
+
+<h2>
+📅 Kalendár rezervácií
+</
