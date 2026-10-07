@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Remeselník AI Dashboard</title>
+<title>Remeselník AI</title>
 
 <style>
 
@@ -15,43 +15,48 @@ font-family:Inter,Arial,sans-serif;
 }
 
 body{
-background:#020617;
+background:#0b1120;
 color:#fff;
 display:flex;
-min-height:100vh;
+height:100vh;
+overflow:hidden;
 }
 
 .sidebar{
 width:260px;
-background:#0f172a;
-padding:25px;
-border-right:1px solid #1e293b;
+background:#111827;
+padding:20px;
+border-right:1px solid #1f2937;
 }
 
 .logo{
 font-size:28px;
-font-weight:bold;
-margin-bottom:25px;
+font-weight:800;
+margin-bottom:30px;
 }
 
 .nav-btn{
+display:block;
 width:100%;
 padding:14px;
 margin-bottom:10px;
-background:#111827;
 border:none;
-border-radius:12px;
+background:#1f2937;
 color:#fff;
+border-radius:12px;
 cursor:pointer;
 text-align:left;
+font-size:15px;
 }
 
-.nav-btn:hover{
+.nav-btn:hover,
+.nav-btn.active{
 background:#2563eb;
 }
 
 .content{
 flex:1;
+overflow:auto;
 padding:25px;
 }
 
@@ -71,76 +76,106 @@ margin:20px 0;
 }
 
 .card{
-background:#0f172a;
-border:1px solid #1e293b;
-border-radius:16px;
+background:#111827;
 padding:20px;
+border-radius:16px;
+border:1px solid #1f2937;
 }
 
 .big{
 font-size:38px;
-font-weight:bold;
-color:#3b82f6;
+font-weight:800;
+color:#60a5fa;
 }
 
 .section{
-background:#0f172a;
-border:1px solid #1e293b;
-border-radius:16px;
+background:#111827;
 padding:20px;
+border-radius:16px;
+border:1px solid #1f2937;
 margin-top:20px;
 }
 
-input,select{
-width:100%;
-padding:12px;
-margin-bottom:10px;
-border:none;
-border-radius:10px;
+.section h2{
+margin-bottom:15px;
 }
 
-.action{
+input,
+select,
+textarea{
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+margin-bottom:10px;
+}
+
+.btn{
 background:#2563eb;
 color:white;
 border:none;
-padding:12px 15px;
+padding:12px 16px;
 border-radius:10px;
 cursor:pointer;
+}
+
+.btn-danger{
+background:#dc2626;
 }
 
 .item{
-background:#111827;
+background:#1f2937;
 padding:12px;
+border-radius:12px;
 margin-top:10px;
-border-radius:10px;
 }
 
-.deleteBtn{
-float:right;
-background:#dc2626;
-border:none;
-color:white;
-padding:5px 10px;
-border-radius:8px;
-cursor:pointer;
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
 }
 
 .calendar{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+grid-template-columns:repeat(2,1fr);
 gap:10px;
-margin-top:20px;
 }
 
 .slot{
-background:#111827;
-padding:12px;
-border-radius:10px;
-text-align:center;
+background:#1f2937;
+padding:15px;
+border-radius:12px;
 }
 
+.small{
+opacity:.8;
+font-size:13px;
+margin-top:5px;
+}
+
+@media(max-width:900px){
+
+body{
+flex-direction:column;
+}
+
+.sidebar{
+width:100%;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.calendar{
+grid-template-columns:1fr;
+}
+
+}
 </style>
 </head>
+
 <body>
 
 <div class="sidebar">
@@ -149,10 +184,29 @@ text-align:center;
 🤖 Remeselník AI
 </div>
 
-<button class="nav-btn" onclick="showPage('dashboard')">📊 Dashboard</button>
-<button class="nav-btn" onclick="showPage('bookings')">📅 Rezervácie</button>
-<button class="nav-btn" onclick="showPage('customers')">👥 Zákazníci</button>
-<button class="nav-btn" onclick="showPage('employees')">👨‍💼 Zamestnanci</button>
+<button class="nav-btn active" onclick="showPage('dashboard',this)">
+📊 Dashboard
+</button>
+
+<button class="nav-btn" onclick="showPage('calendar',this)">
+🗓️ Kalendár
+</button>
+
+<button class="nav-btn" onclick="showPage('bookings',this)">
+📅 Rezervácie
+</button>
+
+<button class="nav-btn" onclick="showPage('customers',this)">
+👥 Zákazníci
+</button>
+
+<button class="nav-btn" onclick="showPage('employees',this)">
+👨‍💼 Zamestnanci
+</button>
+
+<button class="nav-btn" onclick="showPage('services',this)">
+🛠️ Služby
+</button>
 
 </div>
 
@@ -166,135 +220,25 @@ text-align:center;
 
 <div class="card">
 <div class="big" id="bookingCount">0</div>
-<div>Rezervácií</div>
+<div>Rezervácie</div>
 </div>
 
 <div class="card">
 <div class="big" id="customerCount">0</div>
-<div>Zákazníkov</div>
+<div>Zákazníci</div>
 </div>
 
 <div class="card">
 <div class="big" id="employeeCount">0</div>
-<div>Zamestnancov</div>
+<div>Zamestnanci</div>
 </div>
 
 <div class="card">
-<div class="big">4850€</div>
-<div>Obrat</div>
+<div class="big" id="serviceCount">0</div>
+<div>Služby</div>
 </div>
 
 </div>
-
-</div>
-
-<div id="employees" class="page">
 
 <div class="section">
-
-<h2>👨‍💼 Zamestnanci</h2>
-
-<input id="employeeName" placeholder="Meno zamestnanca">
-
-<button class="action" onclick="addEmployee()">
-Pridať zamestnanca
-</button>
-
-<div id="employeeList"></div>
-
-</div>
-
-</div>
-
-<div id="customers" class="page">
-
-<div class="section">
-
-<h2>👥 Zákazníci</h2>
-
-<input id="customerName" placeholder="Meno">
-<input id="customerPhone" placeholder="Telefón">
-<input id="customerEmail" placeholder="Email">
-
-<button class="action" onclick="addCustomer()">
-Pridať zákazníka
-</button>
-
-<div id="customerList"></div>
-
-</div>
-
-</div>
-
-<div id="bookings" class="page">
-
-<div class="section">
-
-<h2>📅 Rezervácie</h2>
-
-<input id="bookingCustomer" placeholder="Meno zákazníka">
-
-<select id="bookingEmployee">
-<option value="">Vyber zamestnanca</option>
-</select>
-
-<input id="bookingTime" placeholder="Čas napr. 10:00">
-
-<button class="action" onclick="addBooking()">
-Pridať rezerváciu
-</button>
-
-<div id="bookingList"></div>
-
-<div class="calendar" id="calendarView"></div>
-
-</div>
-
-</div>
-
-</div>
-
-<script>
-
-let employees =
-JSON.parse(localStorage.getItem("employees")) || [];
-
-let customers =
-JSON.parse(localStorage.getItem("customers")) || [];
-
-let bookings =
-JSON.parse(localStorage.getItem("bookings")) || [];
-
-function saveData(){
-
-localStorage.setItem(
-"employees",
-JSON.stringify(employees)
-);
-
-localStorage.setItem(
-"customers",
-JSON.stringify(customers)
-);
-
-localStorage.setItem(
-"bookings",
-JSON.stringify(bookings)
-);
-
-}
-
-function showPage(id){
-
-document
-.querySelectorAll(".page")
-.forEach(page=>{
-page.classList.remove("active");
-});
-
-document
-.getElementById(id)
-.classList.add("active");
-
-}
-
+<h2>Najbližšie rezervácie</
