@@ -21,12 +21,15 @@ color:white;
 padding:30px;
 }
 
-.header{
+.header,.card,.stat{
 background:#0f172a;
+border:1px solid #1e293b;
+}
+
+.header{
 padding:30px;
 border-radius:20px;
 margin-bottom:25px;
-border:1px solid #1e293b;
 }
 
 .header h1{
@@ -47,26 +50,22 @@ margin-bottom:25px;
 }
 
 .stat{
-background:#0f172a;
 padding:25px;
 border-radius:15px;
 text-align:center;
-border:1px solid #1e293b;
 }
 
 .stat-number{
-font-size:36px;
+font-size:34px;
 font-weight:bold;
 color:#3b82f6;
 margin-bottom:10px;
 }
 
 .card{
-background:#0f172a;
 padding:25px;
 border-radius:15px;
 margin-bottom:25px;
-border:1px solid #1e293b;
 }
 
 .card h2{
@@ -77,12 +76,11 @@ margin-bottom:20px;
 background:#111827;
 padding:15px;
 border-radius:12px;
-margin-bottom:12px;
+margin-bottom:10px;
 border:1px solid #1e293b;
 }
 
 .item-title{
-font-size:18px;
 font-weight:bold;
 margin-bottom:5px;
 }
@@ -98,27 +96,30 @@ border:none;
 padding:12px 18px;
 border-radius:10px;
 cursor:pointer;
-margin-right:10px;
 margin-top:8px;
+margin-right:8px;
 }
 
 button:hover{
 opacity:.9;
 }
 
-input,
-select{
+input,select{
 width:100%;
 padding:12px;
-border:none;
 border-radius:10px;
+border:none;
 margin-bottom:10px;
-background:white;
 }
 
 #serviceForm{
 display:none;
-margin-top:20px;
+margin-top:15px;
+}
+
+.success{
+color:#22c55e;
+margin-top:10px;
 }
 
 .badge{
@@ -126,9 +127,9 @@ display:inline-block;
 background:#14532d;
 padding:5px 10px;
 border-radius:8px;
-margin-right:10px;
-margin-top:5px;
-font-size:13px;
+font-size:12px;
+margin-top:8px;
+margin-right:5px;
 }
 
 </style>
@@ -144,13 +145,8 @@ font-size:13px;
 Najväčšia AI platforma pre remeselníkov na Slovensku a v Česku
 </p>
 
-<button onclick="setLanguage('sk')">
-🇸🇰 SK
-</button>
-
-<button onclick="setLanguage('cz')">
-🇨🇿 CZ
-</button>
+<button onclick="setLanguage('sk')">🇸🇰 SK</button>
+<button onclick="setLanguage('cz')">🇨🇿 CZ</button>
 
 </div>
 
@@ -180,26 +176,44 @@ Najväčšia AI platforma pre remeselníkov na Slovensku a v Česku
 
 <div class="card">
 
+<h2>🔑 Prihlásenie / Registrácia</h2>
+
+<input id="userName" placeholder="Meno">
+
+<input id="userEmail" placeholder="Email">
+
+<button onclick="registerUser()">
+Registrovať
+</button>
+
+<button onclick="loginUser()">
+Prihlásiť
+</button>
+
+<p id="loginStatus" class="success"></p>
+
+</div>
+
+<div class="card">
+
 <h2>🤖 AI Odhad ceny</h2>
 
 <input
 id="jobInput"
-placeholder="Napr. Rekonštrukcia kúpeľne 6m²">
+placeholder="Napr. Rekonštrukcia kúpeľne">
 
 <select id="citySelect">
-
 <option>Bratislava</option>
 <option>Košice</option>
 <option>Praha</option>
 <option>Brno</option>
-
 </select>
 
 <button onclick="calculatePrice()">
 Vypočítať odhad
 </button>
 
-<p id="priceResult" style="margin-top:20px;"></p>
+<p id="priceResult" style="margin-top:15px;"></p>
 
 </div>
 
@@ -229,16 +243,11 @@ Vypočítať odhad
 </div>
 
 <div class="item-subtitle">
-⭐ 4.9 | 🛡️ Overený profil | ✅ Poistený | 250 realizácií
+⭐ 4.9 | 🛡️ Overený profil | ✅ Poistený
 </div>
 
-<div class="badge">
-Reakcia do 15 min
-</div>
-
-<div class="badge">
-Premium Partner
-</div>
+<div class="badge">250 realizácií</div>
+<div class="badge">Premium Partner</div>
 
 </div>
 
@@ -246,21 +255,9 @@ Premium Partner
 
 <div class="card">
 
-<h2>✂️ Moje služby</h2>
+<h2>🛠️ Moje služby</h2>
 
-<div id="servicesContainer">
-
-<div class="item">
-<div class="item-title">✂️ Pánsky strih</div>
-<div class="item-subtitle">20 € • 30 min</div>
-</div>
-
-<div class="item">
-<div class="item-title">🎨 Farbenie</div>
-<div class="item-subtitle">60 € • 90 min</div>
-</div>
-
-</div>
+<div id="servicesContainer"></div>
 
 <button onclick="toggleServiceForm()">
 + Pridať službu
@@ -268,19 +265,16 @@ Premium Partner
 
 <div id="serviceForm">
 
-<input
-id="serviceName"
+<input id="serviceName"
 placeholder="Názov služby">
 
-<input
-id="servicePrice"
+<input id="servicePrice"
 type="number"
 placeholder="Cena">
 
-<input
-id="serviceDuration"
+<input id="serviceDuration"
 type="number"
-placeholder="Trvanie v minútach">
+placeholder="Trvanie">
 
 <button onclick="saveService()">
 Uložiť službu
@@ -292,71 +286,108 @@ Uložiť službu
 
 <div class="card">
 
-<h2>📅 Dashboard</h2>
+<h2>👥 Zákazníci</h2>
 
-<div class="item">
-💰 Mesačné tržby: 4 850 €
-</div>
+<input id="customerName"
+placeholder="Meno zákazníka">
 
-<div class="item">
-📅 Rezervácie: 124
-</div>
+<button onclick="addCustomer()">
+Pridať zákazníka
+</button>
 
-<div class="item">
-⭐ Hodnotenie: 4.9
-</div>
-
-<div class="item">
-📨 Nové dopyty: 18
-</div>
+<div id="customersContainer"></div>
 
 </div>
 
 <div class="card">
 
-<h2>🤖 AI Projektový Asistent</h2>
+<h2>📅 Rezervácie</h2>
 
-<div class="item">
-Napíš:
-<br><br>
-„Potrebujem prerobiť kúpeľňu“
-<br><br>
-AI:
-<br>
-✅ vypočíta cenu
-<br>
-✅ odporučí remeselníkov
-<br>
-✅ pripraví dopyt
-<br>
-✅ navrhne termín
+<input id="bookingCustomer"
+placeholder="Zákazník">
+
+<input id="bookingDate"
+type="date">
+
+<button onclick="addBooking()">
+Uložiť rezerváciu
+</button>
+
+<div id="bookingsContainer"></div>
+
 </div>
+
+<div class="card">
+
+<h2>📊 Dashboard</h2>
+
+<div class="item">💰 Mesačné tržby: 4 850 €</div>
+<div class="item">📅 Rezervácie: <span id="bookCount">0</span></div>
+<div class="item">👥 Zákazníci: <span id="custCount">0</span></div>
+<div class="item">⭐ Hodnotenie: 4.9</div>
 
 </div>
 
 <script>
 
-let currentLanguage = "sk";
+let currentLanguage='sk';
+
+loadData();
 
 function setLanguage(lang){
 
-currentLanguage = lang;
+currentLanguage=lang;
 
-if(lang === "cz"){
+if(lang==='cz'){
 
-document.getElementById("title").innerText =
-"🤖 Řemeslník AI";
+document.getElementById('title').innerText=
+'🤖 Řemeslník AI';
 
-document.getElementById("subtitle").innerText =
-"Největší AI platforma pro řemeslníky v Česku a na Slovensku";
+document.getElementById('subtitle').innerText=
+'Největší AI platforma pro řemeslníky v Česku a na Slovensku';
 
 }else{
 
-document.getElementById("title").innerText =
-"🤖 Remeselník AI";
+document.getElementById('title').innerText=
+'🤖 Remeselník AI';
 
-document.getElementById("subtitle").innerText =
-"Najväčšia AI platforma pre remeselníkov na Slovensku a v Česku";
+document.getElementById('subtitle').innerText=
+'Najväčšia AI platforma pre remeselníkov na Slovensku a v Česku';
+
+}
+
+}
+
+function registerUser(){
+
+const user={
+name:document.getElementById('userName').value,
+email:document.getElementById('userEmail').value
+};
+
+localStorage.setItem(
+'user',
+JSON.stringify(user)
+);
+
+document.getElementById('loginStatus').innerHTML=
+'✅ Registrovaný používateľ: '+user.name;
+
+}
+
+function loginUser(){
+
+const user=
+JSON.parse(localStorage.getItem('user'));
+
+if(user){
+
+document.getElementById('loginStatus').innerHTML=
+'👋 Vitaj '+user.name;
+
+}else{
+
+alert('Používateľ neexistuje');
 
 }
 
@@ -364,57 +395,223 @@ document.getElementById("subtitle").innerText =
 
 function calculatePrice(){
 
-const text =
-document.getElementById("jobInput").value.toLowerCase();
+const text=
+document.getElementById('jobInput')
+.value.toLowerCase();
 
-let result = "";
+let result='';
 
-if(text.includes("kúpeľ") || text.includes("koupel")){
+if(text.includes('kúpe') || text.includes('koup')){
 
-result = "💰 Odhad ceny: 3 500 € - 6 000 €";
+result='💰 3 500 € - 6 000 €';
 
-}else if(text.includes("mal")){
+}else if(text.includes('strecha')){
 
-result = "💰 Odhad ceny: 800 € - 1 800 €";
+result='💰 5 000 € - 15 000 €';
 
-}else if(text.includes("strecha")){
+}else if(text.includes('mal')){
 
-result = "💰 Odhad ceny: 5 000 € - 15 000 €";
+result='💰 800 € - 1 800 €';
 
 }else{
 
-result = "💰 Odhad ceny: 500 € - 5 000 €";
+result='💰 500 € - 5 000 €';
 
 }
 
-document.getElementById("priceResult").innerHTML =
-result;
+document.getElementById('priceResult').innerHTML=result;
 
 }
 
 function toggleServiceForm(){
 
-const form =
-document.getElementById("serviceForm");
+const form=document.getElementById('serviceForm');
 
-form.style.display =
-form.style.display === "block"
-? "none"
-: "block";
+form.style.display=
+form.style.display==='block'
+?'none'
+:'block';
 
 }
 
 function saveService(){
 
-const name =
-document.getElementById("serviceName").value;
+const name=
+document.getElementById('serviceName').value;
 
-const price =
-document.getElementById("servicePrice").value;
+const price=
+document.getElementById('servicePrice').value;
 
-const duration =
-document.getElementById("serviceDuration").value;
+const duration=
+document.getElementById('serviceDuration').value;
 
-if(name === ""){
+if(!name)return;
 
-alert("
+let services=
+JSON.parse(localStorage.getItem('services'))
+|| [];
+
+services.push({
+name,
+price,
+duration
+});
+
+localStorage.setItem(
+'services',
+JSON.stringify(services)
+);
+
+renderServices();
+
+document.getElementById('serviceName').value='';
+document.getElementById('servicePrice').value='';
+document.getElementById('serviceDuration').value='';
+
+}
+
+function renderServices(){
+
+let services=
+JSON.parse(localStorage.getItem('services'))
+|| [];
+
+document.getElementById('servicesContainer').innerHTML='';
+
+services.forEach(service=>{
+
+document.getElementById('servicesContainer').innerHTML+=`
+
+<div class="item">
+<div class="item-title">${service.name}</div>
+<div class="item-subtitle">
+${service.price} € • ${service.duration} min
+</div>
+</div>
+
+`;
+
+});
+
+}
+
+function addCustomer(){
+
+const name=
+document.getElementById('customerName').value;
+
+if(!name)return;
+
+let customers=
+JSON.parse(localStorage.getItem('customers'))
+|| [];
+
+customers.push(name);
+
+localStorage.setItem(
+'customers',
+JSON.stringify(customers)
+);
+
+document.getElementById('customerName').value='';
+
+loadCustomers();
+
+}
+
+function loadCustomers(){
+
+let customers=
+JSON.parse(localStorage.getItem('customers'))
+|| [];
+
+document.getElementById('customersContainer').innerHTML='';
+
+customers.forEach(customer=>{
+
+document.getElementById('customersContainer').innerHTML+=`
+
+<div class="item">
+👤 ${customer}
+</div>
+
+`;
+
+});
+
+document.getElementById('custCount').innerText=
+customers.length;
+
+}
+
+function addBooking(){
+
+const booking={
+
+customer:
+document.getElementById('bookingCustomer').value,
+
+date:
+document.getElementById('bookingDate').value
+
+};
+
+if(!booking.customer)return;
+
+let bookings=
+JSON.parse(localStorage.getItem('bookings'))
+|| [];
+
+bookings.push(booking);
+
+localStorage.setItem(
+'bookings',
+JSON.stringify(bookings)
+);
+
+document.getElementById('bookingCustomer').value='';
+document.getElementById('bookingDate').value='';
+
+loadBookings();
+
+}
+
+function loadBookings(){
+
+let bookings=
+JSON.parse(localStorage.getItem('bookings'))
+|| [];
+
+document.getElementById('bookingsContainer').innerHTML='';
+
+bookings.forEach(booking=>{
+
+document.getElementById('bookingsContainer').innerHTML+=`
+
+<div class="item">
+📅 ${booking.customer}
+<br>
+${booking.date}
+</div>
+
+`;
+
+});
+
+document.getElementById('bookCount').innerText=
+bookings.length;
+
+}
+
+function loadData(){
+
+renderServices();
+loadCustomers();
+loadBookings();
+
+}
+
+</script>
+
+</body>
+</html>
