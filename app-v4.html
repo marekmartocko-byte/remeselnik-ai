@@ -209,7 +209,27 @@ Pridať zamestnanca
 <div class="section">
 
 <h2>📅 Kalendár rezervácií</h2>
+<br>
 
+<input
+id="bookingName"
+placeholder="Meno zákazníka">
+
+<input
+id="bookingTime"
+placeholder="Čas napr. 10:00">
+
+<button
+class="btn"
+onclick="addBooking()">
+
+Pridať rezerváciu
+
+</button>
+
+<br><br>
+
+<div id="calendarBookings"></div>
 <div class="calendar">
 
 <div class="slot">09:00 Voľné</div>
@@ -295,7 +315,89 @@ document.getElementById(
 employees.length;
 
 }
+loadBookings();
 
+function addBooking(){
+
+const booking={
+
+name:
+document.getElementById(
+"bookingName"
+).value,
+
+time:
+document.getElementById(
+"bookingTime"
+).value
+
+};
+
+let bookings=
+JSON.parse(
+localStorage.getItem(
+"calendarBookings"
+)
+)||[];
+
+bookings.push(booking);
+
+localStorage.setItem(
+"calendarBookings",
+JSON.stringify(bookings)
+);
+
+document.getElementById(
+"bookingName"
+).value="";
+
+document.getElementById(
+"bookingTime"
+).value="";
+
+loadBookings();
+
+}
+
+function loadBookings(){
+
+let bookings=
+JSON.parse(
+localStorage.getItem(
+"calendarBookings"
+)
+)||[];
+
+document.getElementById(
+"calendarBookings"
+).innerHTML="";
+
+bookings.forEach(booking=>{
+
+document.getElementById(
+"calendarBookings"
+).innerHTML += `
+
+<div class="employee">
+
+📅 ${booking.time}
+
+<br>
+
+👤 ${booking.name}
+
+</div>
+
+`;
+
+});
+
+document.getElementById(
+"bookingCount"
+).innerText=
+bookings.length;
+
+}
 </script>
 
 </body>
