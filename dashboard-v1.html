@@ -11,7 +11,7 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial,sans-serif;
+font-family:Inter,Arial,sans-serif;
 }
 
 body{
@@ -25,10 +25,11 @@ min-height:100vh;
 width:260px;
 background:#0f172a;
 padding:30px;
+border-right:1px solid #1e293b;
 }
 
 .logo{
-font-size:28px;
+font-size:30px;
 font-weight:bold;
 margin-bottom:30px;
 }
@@ -36,12 +37,12 @@ margin-bottom:30px;
 .nav-btn{
 display:block;
 width:100%;
-background:#111827;
-color:white;
-border:none;
 padding:14px;
 margin-bottom:10px;
-border-radius:10px;
+background:#111827;
+border:none;
+color:white;
+border-radius:12px;
 cursor:pointer;
 text-align:left;
 }
@@ -65,12 +66,12 @@ margin:25px 0;
 .card{
 background:#0f172a;
 border:1px solid #1e293b;
-border-radius:15px;
+border-radius:16px;
 padding:20px;
 }
 
 .big{
-font-size:36px;
+font-size:38px;
 font-weight:bold;
 color:#3b82f6;
 }
@@ -78,9 +79,13 @@ color:#3b82f6;
 .section{
 background:#0f172a;
 border:1px solid #1e293b;
-border-radius:15px;
+border-radius:16px;
 padding:20px;
 margin-bottom:20px;
+}
+
+.section h2{
+margin-bottom:15px;
 }
 
 input{
@@ -89,15 +94,20 @@ padding:12px;
 border:none;
 border-radius:10px;
 margin-bottom:10px;
+background:white;
 }
 
-button.action{
+.action{
 background:#2563eb;
 color:white;
 border:none;
 padding:12px 15px;
 border-radius:10px;
 cursor:pointer;
+}
+
+.action:hover{
+background:#1d4ed8;
 }
 
 .item{
@@ -107,6 +117,41 @@ border-radius:10px;
 margin-top:10px;
 }
 
+.deleteBtn{
+float:right;
+background:#dc2626;
+border:none;
+padding:6px 10px;
+border-radius:8px;
+color:white;
+cursor:pointer;
+}
+
+.deleteBtn:hover{
+background:#b91c1c;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
+
+@media(max-width:900px){
+
+body{
+flex-direction:column;
+}
+
+.sidebar{
+width:100%;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+}
 </style>
 </head>
 
@@ -155,11 +200,11 @@ margin-top:10px;
 
 </div>
 
+<div class="grid">
+
 <div class="section">
 
 <h2>👨‍💼 Zamestnanci</h2>
-
-<br>
 
 <input
 id="employeeName"
@@ -179,9 +224,37 @@ Pridať zamestnanca
 
 <div class="section">
 
-<h2>📅 Rezervácie</h2>
+<h2>👥 Zákazníci</h2>
 
-<br>
+<input
+id="customerName"
+placeholder="Meno zákazníka">
+
+<input
+id="customerPhone"
+placeholder="Telefón">
+
+<input
+id="customerEmail"
+placeholder="Email">
+
+<button
+class="action"
+onclick="addCustomer()">
+
+Pridať zákazníka
+
+</button>
+
+<div id="customerList"></div>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>📅 Rezervácie</h2>
 
 <input
 id="bookingCustomer"
@@ -189,7 +262,7 @@ placeholder="Meno zákazníka">
 
 <input
 id="bookingTime"
-placeholder="Čas napr. 10:00">
+placeholder="Čas (napr. 10:00)">
 
 <button
 class="action"
@@ -208,14 +281,16 @@ Pridať rezerváciu
 <script>
 
 let employees =
-JSON.parse(
-localStorage.getItem("employees")
-) || [];
+JSON.parse(localStorage.getItem("employees"))
+|| [];
+
+let customers =
+JSON.parse(localStorage.getItem("customers"))
+|| [];
 
 let bookings =
-JSON.parse(
-localStorage.getItem("bookings")
-) || [];
+JSON.parse(localStorage.getItem("bookings"))
+|| [];
 
 function saveData(){
 
@@ -225,9 +300,43 @@ JSON.stringify(employees)
 );
 
 localStorage.setItem(
+"customers",
+JSON.stringify(customers)
+);
+
+localStorage.setItem(
 "bookings",
 JSON.stringify(bookings)
 );
+
+}
+
+function addEmployee(){
+
+const name =
+document.getElementById(
+"employeeName"
+).value.trim();
+
+if(!name) return;
+
+employees.push(name);
+
+saveData();
+renderEmployees();
+
+document.getElementById(
+"employeeName"
+).value="";
+
+}
+
+function deleteEmployee(index){
+
+employees.splice(index,1);
+
+saveData();
+renderEmployees();
 
 }
 
@@ -238,13 +347,21 @@ document.getElementById(
 "employeeList"
 );
 
-list.innerHTML = "";
+list.innerHTML="";
 
-employees.forEach(emp => {
+employees.forEach((emp,index)=>{
 
 list.innerHTML += `
 <div class="item">
+
 👨‍💼 ${emp}
+
+<button
+class="deleteBtn"
+onclick="deleteEmployee(${index})">
+🗑
+</button>
+
 </div>
 `;
 
@@ -257,97 +374,38 @@ employees.length;
 
 }
 
-function renderBookings(){
-
-const list =
-document.getElementById(
-"bookingList"
-);
-
-list.innerHTML = "";
-
-bookings.forEach(item => {
-
-list.innerHTML += `
-<div class="item">
-📅 ${item.time}<br>
-👤 ${item.customer}
-</div>
-`;
-
-});
-
-document.getElementById(
-"bookingCount"
-).innerText =
-bookings.length;
-
-}
-
-function addEmployee(){
-
-const input =
-document.getElementById(
-"employeeName"
-);
+function addCustomer(){
 
 const name =
-input.value.trim();
+document.getElementById(
+"customerName"
+).value.trim();
+
+const phone =
+document.getElementById(
+"customerPhone"
+).value.trim();
+
+const email =
+document.getElementById(
+"customerEmail"
+).value.trim();
 
 if(!name) return;
 
-employees.push(name);
-
-saveData();
-renderEmployees();
-
-input.value = "";
-
-}
-
-function addBooking(){
-
-const customer =
-document.getElementById(
-"bookingCustomer"
-).value.trim();
-
-const time =
-document.getElementById(
-"bookingTime"
-).value.trim();
-
-if(!customer || !time){
-
-alert(
-"Vyplň meno zákazníka a čas."
-);
-
-return;
-}
-
-bookings.push({
-customer,
-time
+customers.push({
+name,
+phone,
+email
 });
 
 saveData();
-renderBookings();
+renderCustomers();
 
 document.getElementById(
-"bookingCustomer"
-).value = "";
+"customerName"
+).value="";
 
 document.getElementById(
-"bookingTime"
-).value = "";
-
-}
-
-renderEmployees();
-renderBookings();
-
-</script>
-
-</body>
-</html>
+"customerPhone"
+).
