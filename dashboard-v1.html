@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Remeselník AI v1</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#020617;
+color:white;
+display:flex;
+min-height:100vh;
+}
+
+.sidebar{
+width:260px;
+background:#0f172a;
+padding:25px;
+}
+
+.logo{
+font-size:24px;
+font-weight:bold;
+margin-bottom:30px;
+}
+
+.nav-btn{
+display:block;
+width:100%;
+padding:12px;
+margin-bottom:10px;
+background:#111827;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;
+text-align:left;
+}
+
+.nav-btn:hover{
+background:#2563eb;
+}
+
+.content{
+flex:1;
+padding:30px;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px;
+margin-bottom:20px;
+}
+
+.card{
+background:#0f172a;
+border:1px solid #1e293b;
+border-radius:15px;
+padding:20px;
+}
+
+.value{
+font-size:32px;
+font-weight:bold;
+color:#3b82f6;
+}
+
+.section{
+background:#0f172a;
+border:1px solid #1e293b;
+border-radius:15px;
+padding:20px;
+margin-bottom:20px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-bottom:10px;
+border:none;
+border-radius:10px;
+}
+
+button{
+background:#2563eb;
+color:white;
+border:none;
+padding:12px 15px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.item{
+background:#111827;
+padding:12px;
+margin-top:10px;
+border-radius:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<div class="logo">
+🤖 Remeselník AI
+</div>
+
+<button class="nav-btn">📊 Dashboard</button>
+<button class="nav-btn">📅 Rezervácie</button>
+<button class="nav-btn">👥 Zákazníci</button>
+<button class="nav-btn">👨‍💼 Zamestnanci</button>
+<button class="nav-btn">🛠️ Služby</button>
+<button class="nav-btn">⚙️ Nastavenia</button>
+
+</div>
+
+<div class="content">
+
+<h1>Dashboard</h1>
+
+<br>
+
+<div class="cards">
+
+<div class="card">
+<div class="value" id="bookingCount">0</div>
+<div>Rezervácií</div>
+</div>
+
+<div class="card">
+<div class="value" id="customerCount">0</div>
+<div>Zákazníkov</div>
+</div>
+
+<div class="card">
+<div class="value" id="employeeCount">0</div>
+<div>Zamestnancov</div>
+</div>
+
+<div class="card">
+<div class="value">4850€</div>
+<div>Obrat</div>
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>👨‍💼 Zamestnanci</h2>
+
+<br>
+
+<input
+id="employeeName"
+placeholder="Meno zamestnanca">
+
+<button onclick="addEmployee()">
+Pridať zamestnanca
+</button>
+
+<div id="employeeList"></div>
+
+</div>
+
+<div class="section">
+
+<h2>📅 Rezervácie</h2>
+
+<br>
+
+<input
+id="bookingCustomer
