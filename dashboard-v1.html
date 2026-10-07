@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Remeselník AI v1</title>
+<title>Remeselník AI Dashboard</title>
 
 <style>
 
@@ -25,11 +24,11 @@ min-height:100vh;
 .sidebar{
 width:260px;
 background:#0f172a;
-padding:25px;
+padding:30px;
 }
 
 .logo{
-font-size:24px;
+font-size:28px;
 font-weight:bold;
 margin-bottom:30px;
 }
@@ -37,11 +36,11 @@ margin-bottom:30px;
 .nav-btn{
 display:block;
 width:100%;
-padding:12px;
-margin-bottom:10px;
 background:#111827;
 color:white;
 border:none;
+padding:14px;
+margin-bottom:10px;
 border-radius:10px;
 cursor:pointer;
 text-align:left;
@@ -58,9 +57,9 @@ padding:30px;
 
 .cards{
 display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:15px;
-margin-bottom:20px;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin:25px 0;
 }
 
 .card{
@@ -70,8 +69,8 @@ border-radius:15px;
 padding:20px;
 }
 
-.value{
-font-size:32px;
+.big{
+font-size:36px;
 font-weight:bold;
 color:#3b82f6;
 }
@@ -87,12 +86,12 @@ margin-bottom:20px;
 input{
 width:100%;
 padding:12px;
-margin-bottom:10px;
 border:none;
 border-radius:10px;
+margin-bottom:10px;
 }
 
-button{
+button.action{
 background:#2563eb;
 color:white;
 border:none;
@@ -104,8 +103,8 @@ cursor:pointer;
 .item{
 background:#111827;
 padding:12px;
-margin-top:10px;
 border-radius:10px;
+margin-top:10px;
 }
 
 </style>
@@ -130,29 +129,27 @@ border-radius:10px;
 
 <div class="content">
 
-<h1>Dashboard</h1>
-
-<br>
+<h1>Spravujte svoju prevádzku inteligentne</h1>
 
 <div class="cards">
 
 <div class="card">
-<div class="value" id="bookingCount">0</div>
+<div class="big" id="bookingCount">0</div>
 <div>Rezervácií</div>
 </div>
 
 <div class="card">
-<div class="value" id="customerCount">0</div>
+<div class="big" id="customerCount">0</div>
 <div>Zákazníkov</div>
 </div>
 
 <div class="card">
-<div class="value" id="employeeCount">0</div>
+<div class="big" id="employeeCount">0</div>
 <div>Zamestnancov</div>
 </div>
 
 <div class="card">
-<div class="value">4850€</div>
+<div class="big">4850€</div>
 <div>Obrat</div>
 </div>
 
@@ -168,8 +165,12 @@ border-radius:10px;
 id="employeeName"
 placeholder="Meno zamestnanca">
 
-<button onclick="addEmployee()">
+<button
+class="action"
+onclick="addEmployee()">
+
 Pridať zamestnanca
+
 </button>
 
 <div id="employeeList"></div>
@@ -183,4 +184,170 @@ Pridať zamestnanca
 <br>
 
 <input
-id="bookingCustomer
+id="bookingCustomer"
+placeholder="Meno zákazníka">
+
+<input
+id="bookingTime"
+placeholder="Čas napr. 10:00">
+
+<button
+class="action"
+onclick="addBooking()">
+
+Pridať rezerváciu
+
+</button>
+
+<div id="bookingList"></div>
+
+</div>
+
+</div>
+
+<script>
+
+let employees =
+JSON.parse(
+localStorage.getItem("employees")
+) || [];
+
+let bookings =
+JSON.parse(
+localStorage.getItem("bookings")
+) || [];
+
+function saveData(){
+
+localStorage.setItem(
+"employees",
+JSON.stringify(employees)
+);
+
+localStorage.setItem(
+"bookings",
+JSON.stringify(bookings)
+);
+
+}
+
+function renderEmployees(){
+
+const list =
+document.getElementById(
+"employeeList"
+);
+
+list.innerHTML = "";
+
+employees.forEach(emp => {
+
+list.innerHTML += `
+<div class="item">
+👨‍💼 ${emp}
+</div>
+`;
+
+});
+
+document.getElementById(
+"employeeCount"
+).innerText =
+employees.length;
+
+}
+
+function renderBookings(){
+
+const list =
+document.getElementById(
+"bookingList"
+);
+
+list.innerHTML = "";
+
+bookings.forEach(item => {
+
+list.innerHTML += `
+<div class="item">
+📅 ${item.time}<br>
+👤 ${item.customer}
+</div>
+`;
+
+});
+
+document.getElementById(
+"bookingCount"
+).innerText =
+bookings.length;
+
+}
+
+function addEmployee(){
+
+const input =
+document.getElementById(
+"employeeName"
+);
+
+const name =
+input.value.trim();
+
+if(!name) return;
+
+employees.push(name);
+
+saveData();
+renderEmployees();
+
+input.value = "";
+
+}
+
+function addBooking(){
+
+const customer =
+document.getElementById(
+"bookingCustomer"
+).value.trim();
+
+const time =
+document.getElementById(
+"bookingTime"
+).value.trim();
+
+if(!customer || !time){
+
+alert(
+"Vyplň meno zákazníka a čas."
+);
+
+return;
+}
+
+bookings.push({
+customer,
+time
+});
+
+saveData();
+renderBookings();
+
+document.getElementById(
+"bookingCustomer"
+).value = "";
+
+document.getElementById(
+"bookingTime"
+).value = "";
+
+}
+
+renderEmployees();
+renderBookings();
+
+</script>
+
+</body>
+</html>
