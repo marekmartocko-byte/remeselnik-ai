@@ -315,57 +315,47 @@ document.getElementById(
 employees.length;
 
 }
-window.onload = function(){
+
+
+window.onload = function() {
 
 loadEmployees();
 loadBookings();
 
 };
 
-function addBooking(){
+function addBooking() {
 
-const booking={
+alert("Klik funguje");
 
-name:
-document.getElementById(
-"bookingName"
-).value,
+const name =
+document.getElementById("bookingName").value;
 
-time:
-document.getElementById(
-"bookingTime"
-).value
+const time =
+document.getElementById("bookingTime").value;
 
-};
-
-if(
-!booking.name ||
-!booking.time
-){
+if(!name || !time){
+alert("Vyplň meno a čas");
 return;
 }
 
-let bookings=
+let bookings =
 JSON.parse(
-localStorage.getItem(
-"calendarBookings"
-)
-)||[];
+localStorage.getItem("calendarBookings")
+) || [];
 
-bookings.push(booking);
+bookings.push({
+name:name,
+time:time
+});
 
 localStorage.setItem(
 "calendarBookings",
 JSON.stringify(bookings)
 );
 
-document.getElementById(
-"bookingName"
-).value="";
-
-document.getElementById(
-"bookingTime"
-).value="";
+document.getElementById("bookingName").value="";
+document.getElementById("bookingTime").value="";
 
 loadBookings();
 
@@ -373,17 +363,13 @@ loadBookings();
 
 function loadBookings(){
 
-let bookings=
+let bookings =
 JSON.parse(
-localStorage.getItem(
-"calendarBookings"
-)
-)||[];
+localStorage.getItem("calendarBookings")
+) || [];
 
 const container =
-document.getElementById(
-"calendarBookings"
-);
+document.getElementById("calendarBookings");
 
 if(!container) return;
 
@@ -392,28 +378,21 @@ container.innerHTML="";
 bookings.forEach(booking=>{
 
 container.innerHTML += `
-
 <div class="employee">
-
-📅 ${booking.time}
-
-<br>
-
+📅 ${booking.time}<br>
 👤 ${booking.name}
-
 </div>
-
 `;
 
 });
 
 document.getElementById(
 "bookingCount"
-).innerText=
+).innerText =
 bookings.length;
 
 }
-</script>
+  </script>
 
 </body>
 </html>
