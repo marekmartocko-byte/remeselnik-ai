@@ -6,12 +6,11 @@
 <title>Remeselník AI</title>
 
 <style>
-
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Inter,Arial,sans-serif;
+font-family:Arial,sans-serif;
 }
 
 body{
@@ -19,45 +18,44 @@ background:#0b1120;
 color:#fff;
 display:flex;
 height:100vh;
-overflow:hidden;
 }
 
 .sidebar{
 width:260px;
 background:#111827;
 padding:20px;
-border-right:1px solid #1f2937;
 }
 
 .logo{
-font-size:28px;
-font-weight:800;
+font-size:32px;
+font-weight:bold;
 margin-bottom:30px;
 }
 
 .nav-btn{
-display:block;
 width:100%;
 padding:14px;
 margin-bottom:10px;
 border:none;
-background:#1f2937;
-color:#fff;
 border-radius:12px;
+background:#1f2937;
+color:white;
 cursor:pointer;
 text-align:left;
-font-size:15px;
 }
 
-.nav-btn:hover,
+.nav-btn:hover{
+background:#2563eb;
+}
+
 .nav-btn.active{
 background:#2563eb;
 }
 
 .content{
 flex:1;
-overflow:auto;
 padding:25px;
+overflow:auto;
 }
 
 .page{
@@ -78,104 +76,72 @@ margin:20px 0;
 .card{
 background:#111827;
 padding:20px;
-border-radius:16px;
-border:1px solid #1f2937;
+border-radius:15px;
 }
 
 .big{
-font-size:38px;
-font-weight:800;
+font-size:40px;
+font-weight:bold;
 color:#60a5fa;
 }
 
 .section{
 background:#111827;
 padding:20px;
-border-radius:16px;
-border:1px solid #1f2937;
+border-radius:15px;
 margin-top:20px;
 }
 
-.section h2{
-margin-bottom:15px;
-}
-
 input,
-select,
-textarea{
+select{
 width:100%;
 padding:12px;
+margin-top:10px;
+margin-bottom:10px;
 border:none;
 border-radius:10px;
-margin-bottom:10px;
 }
 
 .btn{
 background:#2563eb;
 color:white;
 border:none;
-padding:12px 16px;
+padding:12px 18px;
 border-radius:10px;
 cursor:pointer;
 }
 
-.btn-danger{
+.btn-delete{
 background:#dc2626;
+float:right;
 }
 
 .item{
 background:#1f2937;
 padding:12px;
-border-radius:12px;
+border-radius:10px;
 margin-top:10px;
-}
-
-.grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px;
 }
 
 .calendar{
 display:grid;
-grid-template-columns:repeat(2,1fr);
+grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
 gap:10px;
+margin-top:20px;
 }
 
 .slot{
 background:#1f2937;
 padding:15px;
-border-radius:12px;
+border-radius:10px;
+text-align:center;
 }
 
-.small{
-opacity:.8;
-font-size:13px;
-margin-top:5px;
-}
-
-@media(max-width:900px){
-
-body{
-flex-direction:column;
-}
-
-.sidebar{
-width:100%;
-}
-
-.grid{
-grid-template-columns:1fr;
-}
-
-.calendar{
-grid-template-columns:1fr;
-}
-
+h1{
+margin-bottom:20px;
 }
 </style>
 </head>
-
 <body>
 
 <div class="sidebar">
@@ -241,4 +207,541 @@ grid-template-columns:1fr;
 </div>
 
 <div class="section">
-<h2>Najbližšie rezervácie</
+<h2>Najbližšie rezervácie</h2>
+<div id="nextBookings"></div>
+</div>
+
+</div>
+
+<div id="calendar" class="page">
+
+<h1>Kalendár</h1>
+
+<div class="section">
+<div class="calendar" id="calendarGrid"></div>
+</div>
+
+</div>
+
+<div id="employees" class="page">
+
+<h1>Zamestnanci</h1>
+
+<div class="section">
+
+<input id="employeeName" placeholder="Meno zamestnanca">
+
+<button class="btn" onclick="addEmployee()">
+Pridať zamestnanca
+</button>
+
+<div id="employeeList"></div>
+
+</div>
+
+</div>
+
+<div id="customers" class="page">
+
+<h1>Zákazníci</h1>
+
+<div class="section">
+
+<input id="customerName" placeholder="Meno">
+
+<input id="customerPhone" placeholder="Telefón">
+
+<input id="customerEmail" placeholder="Email">
+
+<button class="btn" onclick="addCustomer()">
+Pridať zákazníka
+</button>
+
+<div id="customerList"></div>
+
+</div>
+
+</div>
+
+<div id="services" class="page">
+
+<h1>Služby</h1>
+
+<div class="section">
+
+<input id="serviceName" placeholder="Názov služby">
+
+<input id="servicePrice" placeholder="Cena">
+
+<button class="btn" onclick="addService()">
+Pridať službu
+</button>
+
+<div id="serviceList"></div>
+
+</div>
+
+</div>
+
+<div id="bookings" class="page">
+
+<h1>Rezervácie</h1>
+
+<div class="section">
+
+<input id="bookingCustomer" placeholder="Meno zákazníka">
+
+<select id="bookingEmployee">
+<option value="">Vyber zamestnanca</option>
+</select>
+
+<select id="bookingService">
+<option value="">Vyber službu</option>
+</select>
+
+<input id="bookingTime" placeholder="Čas 10:00">
+
+<button class="btn" onclick="addBooking()">
+Pridať rezerváciu
+</button>
+
+<div id="bookingList"></div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+var employees =
+JSON.parse(localStorage.getItem("employees")) || [];
+
+var customers =
+JSON.parse(localStorage.getItem("customers")) || [];
+
+var services =
+JSON.parse(localStorage.getItem("services")) || [];
+
+var bookings =
+JSON.parse(localStorage.getItem("bookings")) || [];
+
+function saveData(){
+
+localStorage.setItem(
+"employees",
+JSON.stringify(employees)
+);
+
+localStorage.setItem(
+"customers",
+JSON.stringify(customers)
+);
+
+localStorage.setItem(
+"services",
+JSON.stringify(services)
+);
+
+localStorage.setItem(
+"bookings",
+JSON.stringify(bookings)
+);
+
+}
+
+function showPage(id,element){
+
+var pages =
+document.querySelectorAll(".page");
+
+for(var i=0;i<pages.length;i++){
+pages[i].classList.remove("active");
+}
+
+var buttons =
+document.querySelectorAll(".nav-btn");
+
+for(var j=0;j<buttons.length;j++){
+buttons[j].classList.remove("active");
+}
+
+document.getElementById(id)
+.classList.add("active");
+
+if(element){
+element.classList.add("active");
+}
+
+}
+
+function addEmployee(){
+
+var name =
+document.getElementById("employeeName")
+.value.trim();
+
+if(name==="") return;
+
+employees.push(name);
+
+document.getElementById(
+"employeeName"
+).value="";
+
+saveData();
+render();
+
+}
+
+function deleteEmployee(index){
+
+employees.splice(index,1);
+
+saveData();
+render();
+
+}
+
+function addCustomer(){
+
+var name =
+document.getElementById(
+"customerName"
+).value.trim();
+
+if(name==="") return;
+
+customers.push({
+name:name,
+phone:document.getElementById("customerPhone").value,
+email:document.getElementById("customerEmail").value
+});
+
+document.getElementById("customerName").value="";
+document.getElementById("customerPhone").value="";
+document.getElementById("customerEmail").value="";
+
+saveData();
+render();
+
+}
+
+function deleteCustomer(index){
+
+customers.splice(index,1);
+
+saveData();
+render();
+
+}
+
+function addService(){
+
+var name =
+document.getElementById(
+"serviceName"
+).value.trim();
+
+var price =
+document.getElementById(
+"servicePrice"
+).value.trim();
+
+if(name==="") return;
+
+services.push({
+name:name,
+price:price
+});
+
+document.getElementById("serviceName").value="";
+document.getElementById("servicePrice").value="";
+
+saveData();
+render();
+
+}
+
+function deleteService(index){
+
+services.splice(index,1);
+
+saveData();
+render();
+
+}
+
+function addBooking(){
+
+var customer =
+document.getElementById(
+"bookingCustomer"
+).value.trim();
+
+var employee =
+document.getElementById(
+"bookingEmployee"
+).value;
+
+var service =
+document.getElementById(
+"bookingService"
+).value;
+
+var time =
+document.getElementById(
+"bookingTime"
+).value.trim();
+
+if(
+customer==="" ||
+employee==="" ||
+service==="" ||
+time===""
+){
+alert("Vyplň všetky údaje");
+return;
+}
+
+bookings.push({
+customer:customer,
+employee:employee,
+service:service,
+time:time
+});
+
+document.getElementById(
+"bookingCustomer"
+).value="";
+
+document.getElementById(
+"bookingTime"
+).value="";
+
+saveData();
+render();
+
+}
+
+function deleteBooking(index){
+
+bookings.splice(index,1);
+
+saveData();
+render();
+
+}
+
+function render(){
+
+document.getElementById(
+"employeeCount"
+).innerText =
+employees.length;
+
+document.getElementById(
+"customerCount"
+).innerText =
+customers.length;
+
+document.getElementById(
+"bookingCount"
+).innerText =
+bookings.length;
+
+document.getElementById(
+"serviceCount"
+).innerText =
+services.length;
+
+var employeeList =
+document.getElementById(
+"employeeList"
+);
+
+employeeList.innerHTML="";
+
+for(var i=0;i<employees.length;i++){
+
+employeeList.innerHTML +=
+'<div class="item">👨‍💼 ' +
+employees[i] +
+'<button class="btn btn-delete" onclick="deleteEmployee(' + i + ')">🗑</button></div>';
+
+}
+
+var customerList =
+document.getElementById(
+"customerList"
+);
+
+customerList.innerHTML="";
+
+for(var c=0;c<customers.length;c++){
+
+customerList.innerHTML +=
+'<div class="item"><strong>' +
+customers[c].name +
+'</strong><br>📞 ' +
+customers[c].phone +
+'<br>📧 ' +
+customers[c].email +
+'<button class="btn btn-delete" onclick="deleteCustomer(' + c + ')">🗑</button></div>';
+
+}
+
+var serviceList =
+document.getElementById(
+"serviceList"
+);
+
+serviceList.innerHTML="";
+
+for(var s=0;s<services.length;s++){
+
+serviceList.innerHTML +=
+'<div class="item">🛠️ ' +
+services[s].name +
+' - ' +
+services[s].price +
+' € <button class="btn btn-delete" onclick="deleteService(' + s + ')">🗑</button></div>';
+
+}
+
+var employeeSelect =
+document.getElementById(
+"bookingEmployee"
+);
+
+employeeSelect.innerHTML =
+'<option value="">Vyber zamestnanca</option>';
+
+for(var e=0;e<employees.length;e++){
+
+employeeSelect.innerHTML +=
+'<option value="' +
+employees[e] +
+'">' +
+employees[e] +
+'</option>';
+
+}
+
+var serviceSelect =
+document.getElementById(
+"bookingService"
+);
+
+serviceSelect.innerHTML =
+'<option value="">Vyber službu</option>';
+
+for(var x=0;x<services.length;x++){
+
+serviceSelect.innerHTML +=
+'<option value="' +
+services[x].name +
+'">' +
+services[x].name +
+'</option>';
+
+}
+
+var bookingList =
+document.getElementById(
+"bookingList"
+);
+
+bookingList.innerHTML="";
+
+for(var b=0;b<bookings.length;b++){
+
+bookingList.innerHTML +=
+'<div class="item"><strong>' +
+bookings[b].time +
+'</strong><br>👤 ' +
+bookings[b].customer +
+'<br>👨‍💼 ' +
+bookings[b].employee +
+'<br>🛠️ ' +
+bookings[b].service +
+'<button class="btn btn-delete" onclick="deleteBooking(' + b + ')">🗑</button></div>';
+
+}
+
+var nextBookings =
+document.getElementById(
+"nextBookings"
+);
+
+if(nextBookings){
+
+nextBookings.innerHTML="";
+
+for(var n=0;n<bookings.length;n++){
+
+nextBookings.innerHTML +=
+'<div class="item">' +
+bookings[n].time +
+' - ' +
+bookings[n].customer +
+'</div>';
+
+}
+
+}
+
+var calendar =
+document.getElementById(
+"calendarGrid"
+);
+
+if(calendar){
+
+calendar.innerHTML="";
+
+var hours = [
+"09:00",
+"10:00",
+"11:00",
+"12:00",
+"13:00",
+"14:00",
+"15:00",
+"16:00",
+"17:00",
+"18:00"
+];
+
+for(var h=0;h<hours.length;h++){
+
+var txt = "Voľné";
+
+for(var z=0;z<bookings.length;z++){
+
+if(bookings[z].time===hours[h]){
+txt = bookings[z].customer;
+}
+
+}
+
+calendar.innerHTML +=
+'<div class="slot"><strong>' +
+hours[h] +
+'</strong><br><br>' +
+txt +
+'</div>';
+
+}
+
+}
+
+}
+
+render();
+
+</script>
+
+</body>
+</html>
