@@ -265,6 +265,21 @@ Pridajte rezervácie na svoj web jedným riadkom kódu.
 </div>
 
 </div>
+  <div class="card">
+
+<h2>👨‍💼 Zamestnanci</h2>
+
+<input
+id="employeeName"
+placeholder="Meno zamestnanca">
+
+<button onclick="addEmployee()">
+Pridať zamestnanca
+</button>
+
+<div id="employeesContainer"></div>
+
+</div>
 <div class="card">
 
 <h2>🔑 Registrácia</h2>
@@ -709,10 +724,61 @@ function loadData(){
 
 renderServices();
 loadCustomers();
-loadBookings();
+727 loadBookings();
+728 loadEmployees();
+
+}
+function addEmployee(){
+
+const name =
+document.getElementById("employeeName").value;
+
+if(!name) return;
+
+let employees =
+JSON.parse(
+localStorage.getItem("employees")
+) || [];
+
+employees.push(name);
+
+localStorage.setItem(
+"employees",
+JSON.stringify(employees)
+);
+
+document.getElementById(
+"employeeName"
+).value = "";
+
+loadEmployees();
 
 }
 
+function loadEmployees(){
+
+let employees =
+JSON.parse(
+localStorage.getItem("employees")
+) || [];
+
+document.getElementById(
+"employeesContainer"
+).innerHTML = "";
+
+employees.forEach(employee => {
+
+document.getElementById(
+"employeesContainer"
+).innerHTML += `
+<div class="item">
+👨‍💼 ${employee}
+</div>
+`;
+
+});
+
+}
 </script>
 
 </body>
