@@ -3,19 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Remeselník AI</title>
 
 <style>
+
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial,sans-serif;
+font-family:Segoe UI,sans-serif;
 }
 
 body{
 display:flex;
-height:100vh;
+min-height:100vh;
 background:#0f172a;
 color:white;
 }
@@ -24,23 +26,26 @@ color:white;
 width:250px;
 background:#111827;
 padding:20px;
+border-right:1px solid rgba(255,255,255,.08);
 }
 
 .logo{
 font-size:28px;
-font-weight:bold;
-margin-bottom:20px;
+font-weight:700;
+margin-bottom:25px;
 }
 
 .nav-btn{
 width:100%;
-padding:12px;
+padding:14px;
 margin-bottom:10px;
 border:none;
-border-radius:10px;
+border-radius:12px;
 background:#1f2937;
 color:white;
 cursor:pointer;
+font-size:15px;
+transition:.2s;
 }
 
 .nav-btn:hover,
@@ -50,7 +55,8 @@ background:#2563eb;
 
 .content{
 flex:1;
-padding:20px;
+padding:25px;
+overflow:auto;
 }
 
 .page{
@@ -61,38 +67,117 @@ display:none;
 display:block;
 }
 
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+margin-bottom:25px;
+}
+
 .card{
-background:#1f2937;
+background:linear-gradient(135deg,#1e293b,#0f172a);
 padding:20px;
-border-radius:12px;
+border-radius:16px;
+border:1px solid rgba(255,255,255,.08);
+box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+.card h3{
+font-size:15px;
+color:#cbd5e1;
+margin-bottom:10px;
+}
+
+.card h2{
+font-size:34px;
+color:#3b82f6;
+}
+
+.section{
+background:#111827;
+padding:20px;
+border-radius:16px;
+margin-top:20px;
+}
+
+.section h2{
 margin-bottom:15px;
 }
 
-input{
+input,
+select{
 width:100%;
-padding:10px;
-margin:10px 0;
+padding:12px;
 border:none;
-border-radius:8px;
+border-radius:10px;
+margin-bottom:10px;
+background:#1f2937;
+color:white;
 }
 
-button.action{
-padding:10px 14px;
+.action{
+padding:12px 15px;
+border:none;
+border-radius:10px;
 background:#2563eb;
 color:white;
-border:none;
-border-radius:8px;
 cursor:pointer;
+font-weight:600;
+}
+
+.action:hover{
+background:#1d4ed8;
 }
 
 .item{
-background:#334155;
-padding:10px;
+background:#1f2937;
+padding:15px;
+border-radius:12px;
 margin-top:10px;
-border-radius:8px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
 }
-</style>
 
+.delete-btn{
+background:#dc2626;
+border:none;
+padding:8px 12px;
+border-radius:8px;
+color:white;
+cursor:pointer;
+}
+
+.delete-btn:hover{
+background:#b91c1c;
+}
+
+.booking-info{
+display:flex;
+flex-direction:column;
+gap:4px;
+}
+
+.title{
+font-size:42px;
+font-weight:800;
+margin-bottom:20px;
+}
+
+@media(max-width:900px){
+
+body{
+flex-direction:column;
+}
+
+.sidebar{
+width:100%;
+}
+
+}
+
+</style>
 </head>
 <body>
 
@@ -102,10 +187,10 @@ border-radius:8px;
 🤖 Remeselník AI
 </div>
 
-<button class="nav-btn active" onclick="showPage('dashboard',this)">Dashboard</button>
-<button class="nav-btn" onclick="showPage('employees',this)">Zamestnanci</button>
-<button class="nav-btn" onclick="showPage('customers',this)">Zákazníci</button>
-<button class="nav-btn" onclick="showPage('bookings',this)">Rezervácie</button>
+<button class="nav-btn active" onclick="showPage('dashboard',this)">📊 Dashboard</button>
+<button class="nav-btn" onclick="showPage('employees',this)">👷 Zamestnanci</button>
+<button class="nav-btn" onclick="showPage('customers',this)">👥 Zákazníci</button>
+<button class="nav-btn" onclick="showPage('bookings',this)">📅 Rezervácie</button>
 
 </div>
 
@@ -113,263 +198,16 @@ border-radius:8px;
 
 <div id="dashboard" class="page active">
 
-<h1>Dashboard</h1>
+<h1 class="title">
+Spravujte svoju prevádzku inteligentne
+</h1>
+
+<div class="stats">
 
 <div class="card">
-Počet zamestnancov:
-<span id="employeeCount">0</span>
+<h3>Zamestnanci</h3>
+<h2 id="employeeCount">0</h2>
 </div>
 
 <div class="card">
-Počet zákazníkov:
-<span id="customerCount">0</span>
-</div>
-
-<div class="card">
-Počet rezervácií:
-<span id="bookingCount">0</span>
-</div>
-
-</div>
-
-<div id="employees" class="page">
-
-<h1>Zamestnanci</h1>
-
-<input id="employeeName" placeholder="Meno zamestnanca">
-
-<button class="action" onclick="addEmployee()">
-Pridať
-</button>
-
-<div id="employeeList"></div>
-
-</div>
-
-<div id="customers" class="page">
-
-<h1>Zákazníci</h1>
-
-<input id="customerName" placeholder="Meno zákazníka">
-
-<button class="action" onclick="addCustomer()">
-Pridať
-</button>
-
-<div id="customerList"></div>
-
-</div>
-
-<div id="bookings" class="page">
-
-<h1>Rezervácie</h1>
-
-<input id="bookingName" placeholder="Meno zákazníka">
-
-<input id="bookingTime" placeholder="Čas 10:00">
-
-<button class="action" onclick="addBooking()">
-Pridať
-</button>
-
-<div id="bookingList"></div>
-
-</div>
-
-</div>
-
-<script>
-
-let employees =
-JSON.parse(localStorage.getItem("employees")) || [];
-
-let customers =
-JSON.parse(localStorage.getItem("customers")) || [];
-
-let bookings =
-JSON.parse(localStorage.getItem("bookings")) || [];
-
-function saveData(){
-
-localStorage.setItem(
-"employees",
-JSON.stringify(employees)
-);
-
-localStorage.setItem(
-"customers",
-JSON.stringify(customers)
-);
-
-localStorage.setItem(
-"bookings",
-JSON.stringify(bookings)
-);
-
-}
-
-function showPage(pageId,button){
-
-document.querySelectorAll(".page")
-.forEach(function(page){
-page.classList.remove("active");
-});
-
-document.querySelectorAll(".nav-btn")
-.forEach(function(btn){
-btn.classList.remove("active");
-});
-
-document.getElementById(pageId)
-.classList.add("active");
-
-button.classList.add("active");
-
-}
-
-function addEmployee(){
-
-const name =
-document.getElementById(
-"employeeName"
-).value.trim();
-
-if(!name) return;
-
-employees.push(name);
-
-saveData();
-
-document.getElementById(
-"employeeName"
-).value = "";
-
-render();
-
-}
-
-function addCustomer(){
-
-const name =
-document.getElementById(
-"customerName"
-).value.trim();
-
-if(!name) return;
-
-customers.push(name);
-
-saveData();
-
-document.getElementById(
-"customerName"
-).value = "";
-
-render();
-
-}
-
-function addBooking(){
-
-const name =
-document.getElementById(
-"bookingName"
-).value.trim();
-
-const time =
-document.getElementById(
-"bookingTime"
-).value.trim();
-
-if(!name || !time){
-return;
-}
-
-bookings.push({
-name:name,
-time:time
-});
-
-saveData();
-
-document.getElementById(
-"bookingName"
-).value = "";
-
-document.getElementById(
-"bookingTime"
-).value = "";
-
-render();
-
-}
-
-function render(){
-
-document.getElementById(
-"employeeCount"
-).innerText =
-employees.length;
-
-document.getElementById(
-"customerCount"
-).innerText =
-customers.length;
-
-document.getElementById(
-"bookingCount"
-).innerText =
-bookings.length;
-
-const employeeList =
-document.getElementById(
-"employeeList"
-);
-
-employeeList.innerHTML = "";
-
-employees.forEach(function(emp){
-
-employeeList.innerHTML +=
-`<div class="item">${emp}</div>`;
-
-});
-
-const customerList =
-document.getElementById(
-"customerList"
-);
-
-customerList.innerHTML = "";
-
-customers.forEach(function(c){
-
-customerList.innerHTML +=
-`<div class="item">${c}</div>`;
-
-});
-
-const bookingList =
-document.getElementById(
-"bookingList"
-);
-
-bookingList.innerHTML = "";
-
-bookings.forEach(function(b){
-
-bookingList.innerHTML +=
-`<div class="item">
-${b.time} - ${b.name}
-</div>`;
-
-});
-
-}
-
-render();
-
-</script>
-
-</body>
-</html>
+<h3>Zákazníci</h
